@@ -989,3 +989,68 @@ html.menu-open .mobile-bar { transform: translateY(160%); }
   .footer2-grid { grid-template-columns: 1fr 1fr; }
   .footer2-brand { grid-column: 1 / -1; }
 }
+
+/* ===================== v10: the will card ===================== */
+.will {
+  background: #fff; border: 1px solid var(--line); border-radius: 24px; padding: 22px;
+  box-shadow: var(--shadow); display: grid; gap: 20px;
+}
+.will-main { display: grid; grid-template-columns: 260px 1fr; gap: 28px; align-items: center; }
+.will-ring { position: relative; width: 100%; max-width: 260px; aspect-ratio: 1; margin: 0 auto; }
+.will-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); overflow: visible; }
+.ring-track { fill: none; stroke: #eef2ff; stroke-width: 26; }
+.ring-arc { fill: none; stroke-width: 26; stroke-linecap: round; transition: opacity 0.25s, stroke-width 0.25s; cursor: pointer; }
+.ring-arc:hover { stroke-width: 30; }
+.ring-arc.dim { opacity: 0.25; }
+.arc-holders { stroke: var(--logo-1); }
+.arc-saviors { stroke: var(--logo-2); }
+.arc-next { stroke: #8fb0ff; }
+.ring-inner {
+  fill: #f6f8ff; stroke: #e1e8fb; stroke-width: 1;
+}
+.ring-orbit { transform-origin: 120px 120px; animation: orbit 8s linear infinite; }
+.ring-dot { fill: #fff; stroke: var(--logo-1); stroke-width: 2.5; filter: drop-shadow(0 0 6px rgba(47, 107, 255, 0.7)); }
+@keyframes orbit { to { transform: rotate(360deg); } }
+.ring-center { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; gap: 2px; pointer-events: none; }
+.ring-center .mono { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.ring-center b { font-size: clamp(18px, 2.4vw, 24px); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: var(--navy); }
+.ring-center small { font-size: 10px; color: var(--logo-1); }
+
+.heirs { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.heir {
+  display: grid; grid-template-columns: 40px 1fr; gap: 14px; padding: 14px; border-radius: 16px;
+  border: 1px solid var(--line); background: #fbfcff; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.heir.on, .heir:hover { border-color: #b9cbff; box-shadow: 0 10px 30px -18px rgba(31, 91, 255, 0.6); transform: translateY(-1px); }
+.heir-icon {
+  width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; color: #fff;
+}
+.heir-icon svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.heir-holders .heir-icon { background: linear-gradient(160deg, #4d82ff, var(--logo-1)); }
+.heir-saviors .heir-icon { background: linear-gradient(160deg, var(--logo-1), var(--logo-2)); }
+.heir-next .heir-icon { background: linear-gradient(160deg, #b5c9ff, #8fb0ff); }
+.heir-text { display: grid; gap: 4px; min-width: 0; }
+.heir-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.heir-top b { font-size: 14.5px; }
+.heir-top em { font-style: normal; font-size: 18px; font-weight: 700; color: var(--navy); }
+.heir-text small { font-size: 12.5px; line-height: 1.45; }
+.heir-bar { height: 5px; border-radius: 999px; background: #eef2ff; overflow: hidden; margin-top: 4px; }
+.heir-bar i { display: block; height: 100%; border-radius: inherit; }
+.heir-holders .heir-bar i { background: var(--logo-1); }
+.heir-saviors .heir-bar i { background: var(--logo-2); }
+.heir-next .heir-bar i { background: #8fb0ff; }
+.heir-now { font-size: 10.5px; color: var(--logo-1); letter-spacing: 0.02em; }
+
+.will .check { border-top: 1px dashed #c9d7ff; padding-top: 18px; }
+.will .check .vital-label { font-size: 10.5px; }
+.will .check input { height: 44px; font-size: 13px; }
+.will .check .btn { height: 44px; }
+
+@media (max-width: 820px) {
+  .will { padding: 16px; }
+  .will-main { grid-template-columns: 1fr; gap: 18px; }
+  .will-ring { max-width: 210px; }
+  .heir { padding: 12px; gap: 12px; grid-template-columns: 36px 1fr; }
+  .heir-icon { width: 36px; height: 36px; border-radius: 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .ring-orbit { animation: none; } }

@@ -2,13 +2,14 @@ import Logo from '@/components/Logo';
 import MobileBar from '@/components/MobileBar';
 import StatusStack from '@/components/StatusStack';
 import TokenFlow from '@/components/TokenFlow';
+import InheritanceCard from '@/components/InheritanceCard';
 import { MergeArt, FadingBars, SplitArt } from '@/components/Illustrations';
 import Monitor from '@/components/Monitor';
 import { VitalsProvider } from '@/components/VitalsProvider';
 import { HeroStats, Ticker, Reveal } from '@/components/Live';
 import HeroScene, { PulseButton, SoundToggle } from '@/components/HeroScene';
 import Nav from '@/components/Nav';
-import { Feed, Graveyard, SaviorCheck } from '@/components/Panels';
+import { Feed, Graveyard } from '@/components/Panels';
 import { site, STATUS, INHERITANCE, NAV_LINKS } from '@/lib/site';
 
 // EKG path: `beats` complexes across `width`, spike height scaled by `amp`.
@@ -150,25 +151,7 @@ export default function Home() {
             </p>
           </Reveal>
           <Reveal delay={80}>
-            <div className="split card">
-              <div className="split-bar">
-                {INHERITANCE.map((p) => (
-                  <span key={p.key} className={`split-seg seg-${p.key}`} style={{ flexBasis: `${p.pct}%` }}>{p.pct}%</span>
-                ))}
-              </div>
-              <div className="split-legend">
-                {INHERITANCE.map((p) => (
-                  <div key={p.key} className="legend-item">
-                    <span className={`legend-dot seg-${p.key}`} />
-                    <div>
-                      <b>{p.pct}% · {p.label}</b>
-                      <p className="muted">{p.note}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <SaviorCheck />
-            </div>
+            <InheritanceCard />
           </Reveal>
         </section>
 
@@ -282,7 +265,6 @@ export default function Home() {
         </div>
         <div className="footer2-bottom">
           <span className="mono">© Lastbreath · {site.ticker}</span>
-          <p>An experiment in on-chain mortality. Not financial advice, no promise of profit. Trade only what you can afford to lose.</p>
         </div>
       </footer>
       <MobileBar />
