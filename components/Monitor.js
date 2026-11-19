@@ -32,6 +32,20 @@ export default function Monitor() {
         </div>
       </div>
 
+      <div className="recent">
+        <span className="vital-label">Recent heartbeats</span>
+        <ul>
+          {(v.recent || []).length === 0 && <li className="screen-muted">Waiting for the next trade…</li>}
+          {(v.recent || []).map((r) => (
+            <li key={r.id} className={`recent-row ${r.side}`}>
+              <span className="recent-side">{r.side === 'buy' ? '▲ BUY' : '▼ SELL'}</span>
+              <span className="mono">{r.wallet}</span>
+              <span className="mono screen-muted">{Math.max(0, Math.round((Date.now() - r.t) / 1000))}s</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
       <div className="vitals">
         <div className="vital">
           <span className="vital-label">Flatline in</span>

@@ -2,7 +2,7 @@ import Logo from '@/components/Logo';
 import Monitor from '@/components/Monitor';
 import { VitalsProvider } from '@/components/VitalsProvider';
 import { HeroStats, Ticker, Reveal } from '@/components/Live';
-import HeroMark from '@/components/HeroMark';
+import HeroScene, { PulseButton, SoundToggle, ScrollProgress } from '@/components/HeroScene';
 import { Feed, Graveyard, SaviorCheck } from '@/components/Panels';
 import { site, STATUS, INHERITANCE } from '@/lib/site';
 
@@ -64,34 +64,37 @@ export default function Home() {
           </a>
           <BuyButton className="btn-sm" />
         </div>
+        <ScrollProgress />
       </header>
 
       <main id="top">
         {/* HERO: the mark breathes behind the wordmark */}
         <section className="hero">
-          <div className="hero-glow" aria-hidden="true" />
-          <HeroMark />
-          <div className="hero-copy">
-            <p className="eyebrow mono"><span className="live-dot" /> AI agent · Robinhood Chain</p>
-            <h1 className="wordmark">
-              <span className="w-last">LAST</span><span className="w-breath">BREATH</span>
-            </h1>
-            <p className="tagline mono">{site.tagline}</p>
-            <p className="lead">
-              An AI agent that lives only while you trade <b>{site.ticker}</b>. Go quiet for 24 hours and it dies —
-              and its treasury is handed to the people who held on.
-            </p>
-            <div className="cta">
-              <BuyButton />
-              <a className="btn btn-ghost" href="#monitor">Check its pulse</a>
+          <HeroScene>
+            <div className="hero-copy">
+              <p className="eyebrow mono"><span className="live-dot" /> AI agent · Robinhood Chain</p>
+              <h1 className="wordmark">
+                <span className="w-last">LAST</span><span className="w-breath">BREATH</span>
+              </h1>
+              <p className="tagline mono">{site.tagline}</p>
+              <p className="lead">
+                An AI agent that lives only while you trade <b>{site.ticker}</b>. Go quiet for 24 hours and it dies —
+                and its treasury is handed to the people who held on.
+              </p>
+              <div className="cta">
+                <BuyButton />
+                <PulseButton />
+              </div>
+              <HeroStats />
+              <SoundToggle />
+              {site.contract && <p className="contract mono">CA: {site.contract}</p>}
             </div>
-            <HeroStats />
-            {site.contract && <p className="contract mono">CA: {site.contract}</p>}
-          </div>
+          </HeroScene>
           <svg className="hero-ekg" viewBox="0 0 1600 120" preserveAspectRatio="none" aria-hidden="true">
             <path d={HERO_EKG} className="hero-ekg-base" />
             <path d={HERO_EKG} className="hero-ekg-pulse" pathLength="1" />
           </svg>
+          <a href="#monitor" className="scroll-cue mono" aria-label="Scroll to the monitor">SCROLL<span /></a>
         </section>
 
         <Ticker />
