@@ -62,3 +62,17 @@ Saat agent mati, `src/will.js` membuat snapshot: saldo semua holder pada blok ke
 | `GET /will/<gen>/<wallet>` | jumlah + proof untuk satu wallet (dipakai tombol Claim) |
 
 Lihat `contracts/README.md` untuk deploy kontrak dan langkah settle.
+
+
+## Run it for free on GitHub Actions (no server, no card)
+
+`.github/workflows/agent.yml` runs `src/once.js` every ~5 minutes. Each run reads new trades,
+updates the status, posts, and saves everything to the `agent-state` branch. The website reads
+that branch through `/api/agent` (set `NEXT_PUBLIC_AGENT_API=https://lastbreath.fun/api/agent` on Vercel).
+
+1. GitHub repo → Settings → Secrets and variables → Actions.
+2. Variables: `BREATH_TOKEN`, `POOL_ADDRESSES`, `WILL_CONTRACT`, `AGENT_WALLET`, `START_BLOCK` (launch block), `DRY_RUN`.
+3. Secrets: `RPC_URL` (+ optional `ANTHROPIC_API_KEY`, X keys, Telegram).
+4. Actions tab → agent → Run workflow (first run), then it runs on schedule.
+
+Before launch (no `BREATH_TOKEN`) it just writes an UNBORN status.

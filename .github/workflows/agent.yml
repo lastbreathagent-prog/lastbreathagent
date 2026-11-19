@@ -1,0 +1,73 @@
+# Runs the Lastbreath agent for free on GitHub Actions: every ~5 minutes it checks the chain once,
+# posts if needed, and saves its state + public JSON to the `agent-state` branch.
+# The website reads that branch through /api/agent.
+#
+# Settings -> Secrets and variables -> Actions:
+#   Variables: BREATH_TOKEN, POOL_ADDRESSES, WILL_CONTRACT, AGENT_WALLET, START_BLOCK, DRY_RUN (true/false)
+#   Secrets:   RPC_URL, ANTHROPIC_API_KEY, X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET,
+#              TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID (all optional except RPC_URL after launch)
+name: agent
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: agent
+  cancel-in-progress: false
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Load saved state
+        run: |
+          if git ls-remote --exit-code --heads origin agent-state >/dev/null; then
+            git fetch --depth=1 origin agent-state
+            mkdir state && git --work-tree=state checkout FETCH_HEAD -- . && git reset -q
+          else
+            mkdir state
+          fi
+          ls -la state
+
+      - name: Run one heartbeat check
+        working-directory: agent
+        env:
+          STATE_FILE: ${{ github.workspace }}/state/state.json
+          PUBLIC_URL: https://lastbreath.fun/api/agent
+          RPC_URL: ${{ secrets.RPC_URL }}
+          BREATH_TOKEN: ${{ vars.BREATH_TOKEN }}
+          POOL_ADDRESSES: ${{ vars.POOL_ADDRESSES }}
+          WILL_CONTRACT: ${{ vars.WILL_CONTRACT }}
+          AGENT_WALLET: ${{ vars.AGENT_WALLET }}
+          START_BLOCK: ${{ vars.START_BLOCK || '0' }}
+          DRY_RUN: ${{ vars.DRY_RUN || 'true' }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node src/once.js
+
+      - name: Save state
+        working-directory: state
+        run: |
+          git init -q -b agent-state
+          git config user.name "lastbreath-agent"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "heartbeat $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" agent-state
