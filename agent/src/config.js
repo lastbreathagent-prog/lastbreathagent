@@ -59,6 +59,11 @@ export const config = {
     accessToken: env('X_ACCESS_TOKEN', ''),
     accessSecret: env('X_ACCESS_SECRET', ''),
   },
+  // --- Telegram (free): every post also goes to this chat/channel ---
+  telegram: {
+    botToken: env('TELEGRAM_BOT_TOKEN', ''),
+    chatId: env('TELEGRAM_CHAT_ID', ''), // e.g. @lastbreathagent (public channel) or a numeric chat id
+  },
   dryRun: env('DRY_RUN', 'true') !== 'false', // default: print posts, don't publish
 
   // --- Storage + API ---

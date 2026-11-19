@@ -20,7 +20,23 @@ export function oauthHeader(method, url, x, nonce = crypto.randomBytes(16).toStr
   return 'OAuth ' + Object.keys(params).sort().map((k) => `${enc(k)}="${enc(params[k])}"`).join(', ');
 }
 
+// Telegram Bot API (free). Sends every post to a chat or public channel.
+export async function postTelegram(text, cfg, log = console) {
+  const { botToken, chatId } = cfg.telegram || {};
+  if (!botToken || !chatId) return null;
+  const res = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ chat_id: chatId, text, disable_web_page_preview: true }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!data.ok) throw new Error(`Telegram ${res.status}: ${data.description || 'error'}`);
+  log.info?.(`[TG] sent ${data.result?.message_id}`);
+  return data.result?.message_id;
+}
+
 export async function post(text, cfg, log = console) {
+  try { await postTelegram(text, cfg, log); } catch (err) { log.error?.(`[TG] ${err.message}`); }
   const hasKeys = cfg.x.apiKey && cfg.x.apiSecret && cfg.x.accessToken && cfg.x.accessSecret;
   if (cfg.dryRun || !hasKeys) {
     log.info?.(`[X dry-run] ${text}`);

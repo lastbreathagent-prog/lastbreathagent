@@ -1,7 +1,7 @@
 // Checks the API keys without posting anything. Run: npm run check
 // Add --post to publish ONE real test tweet (only if DRY_RUN=false).
 import { config as cfg } from './config.js';
-import { oauthHeader, post } from './poster.js';
+import { oauthHeader, post, postTelegram } from './poster.js';
 import { writePost } from './brain.js';
 import { personaFor } from './personas.js';
 
@@ -34,6 +34,11 @@ async function checkClaude() {
 console.log(`\nLastbreath agent check   mode: ${cfg.tokenAddress ? 'LIVE' : 'PRE-LAUNCH'}   DRY_RUN: ${cfg.dryRun}\n`);
 await checkClaude().catch((e) => bad(`Claude: ${e.message}`));
 const xOk = await checkX().catch((e) => bad(`X: ${e.message}`));
+if (cfg.telegram.botToken && cfg.telegram.chatId) {
+  await postTelegram('🫁 test breath. Lastbreath agent is connected.', cfg, { info: () => {} })
+    .then(() => ok(`Telegram connected: test message sent to ${cfg.telegram.chatId}`))
+    .catch((e) => bad(`${e.message} (is the bot an admin of the channel? is the chat id right?)`));
+} else info('Telegram not set (TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID): optional, free.');
 
 if (process.argv.includes('--post')) {
   if (cfg.dryRun) info('--post ignored: set DRY_RUN=false to publish the test tweet.');
