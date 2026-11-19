@@ -78,7 +78,9 @@ export async function writePost(kind, vitals, cfg, log = console) {
   if (cfg.anthropicKey) {
     try {
       const text = await askLLM(buildPrompt(kind, v, cfg), cfg);
-      if (text) return text.slice(0, 280);
+      // X charges much more for posts with links, so strip any URL the model adds.
+      const clean = text?.replace(/https?:\/\/\S+/g, '').replace(/\s+\n/g, '\n').trim();
+      if (clean) return clean.slice(0, 280);
     } catch (err) {
       log.warn?.(`[brain] LLM failed, using template: ${err.message}`);
     }
