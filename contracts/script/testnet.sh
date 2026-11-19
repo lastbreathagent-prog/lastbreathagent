@@ -17,7 +17,12 @@ E=1000000000000000000
 say() { printf '\n\033[1;34m▶ %s\033[0m\n' "$*"; }
 deploy() { forge create "$@" --rpc-url "$RPC" --private-key "$PRIVATE_KEY" --broadcast 2>&1 | tee /dev/stderr | grep -i "Deployed to" | awk '{print $3}'; }
 
-say "Chain id: $(cast chain-id --rpc-url "$RPC")   wallet: $ME   balance: $(cast balance "$ME" --ether --rpc-url "$RPC") ETH"
+CHAIN=$(cast chain-id --rpc-url "$RPC" 2>/dev/null || true)
+if [[ -z "$CHAIN" ]]; then echo "❌ Cannot reach the RPC at $RPC. Check your connection or set RPC_URL to another endpoint."; exit 1; fi
+if [[ "$CHAIN" != "46630" ]]; then echo "❌ RPC is on chain $CHAIN, expected Robinhood Chain testnet (46630)."; exit 1; fi
+BAL=$(cast balance "$ME" --rpc-url "$RPC")
+if [[ "$BAL" == "0" ]]; then echo "❌ Wallet $ME has 0 testnet ETH. Use the faucet first."; exit 1; fi
+say "Chain id: $CHAIN   wallet: $ME   balance: $(cast balance "$ME" --ether --rpc-url "$RPC") ETH"
 
 say "1/6 Deploy test token"
 TOKEN=$(deploy src/TestBreath.sol:TestBreath)
