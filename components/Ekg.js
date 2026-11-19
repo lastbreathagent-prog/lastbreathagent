@@ -25,10 +25,12 @@ function complex(p) {
 }
 
 /** Scrolling heart monitor. Call ref.current.trade('buy'|'sell') to add a big trade spike. */
-const Ekg = forwardRef(function Ekg({ status = 'HEALTHY', color = '#1f5bff', height = 160 }, ref) {
+const Ekg = forwardRef(function Ekg({ status = 'HEALTHY', color = '#1f5bff', height = 160, grid = 'rgba(31,91,255,0.08)' }, ref) {
   const canvas = useRef(null);
   const statusRef = useRef(status);
   const colorRef = useRef(color);
+  const gridRef = useRef(grid);
+  gridRef.current = grid;
   const spikes = useRef([]);
   statusRef.current = status;
   colorRef.current = color;
@@ -88,7 +90,7 @@ const Ekg = forwardRef(function Ekg({ status = 'HEALTHY', color = '#1f5bff', hei
 
       ctx.clearRect(0, 0, w, h);
       // grid
-      ctx.strokeStyle = 'rgba(31,91,255,0.08)';
+      ctx.strokeStyle = gridRef.current;
       ctx.lineWidth = 1;
       for (let x = 0; x < w; x += 24) { ctx.beginPath(); ctx.moveTo(x + 0.5, 0); ctx.lineTo(x + 0.5, h); ctx.stroke(); }
       for (let y = 0; y < h; y += 24) { ctx.beginPath(); ctx.moveTo(0, y + 0.5); ctx.lineTo(w, y + 0.5); ctx.stroke(); }
@@ -104,7 +106,7 @@ const Ekg = forwardRef(function Ekg({ status = 'HEALTHY', color = '#1f5bff', hei
       ctx.lineWidth = 2.5;
       ctx.lineJoin = 'round';
       ctx.shadowColor = colorRef.current;
-      ctx.shadowBlur = 8;
+      ctx.shadowBlur = 12;
       ctx.beginPath();
       points.forEach((y, x) => (x ? ctx.lineTo(x, mid - y * scale) : ctx.moveTo(x, mid - y * scale)));
       ctx.stroke();

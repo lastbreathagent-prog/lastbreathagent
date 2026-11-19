@@ -1,7 +1,33 @@
 import Logo from '@/components/Logo';
 import Monitor from '@/components/Monitor';
+import { VitalsProvider } from '@/components/VitalsProvider';
+import { HeroStats, Ticker, Reveal } from '@/components/Live';
 import { Feed, Graveyard, SaviorCheck } from '@/components/Panels';
 import { site, STATUS, INHERITANCE } from '@/lib/site';
+
+// EKG path: `beats` complexes across `width`, spike height scaled by `amp`.
+function ekgPath({ width, base, beats, amp, spike = 46 }) {
+  if (!amp) return `M0 ${base} H${width}`;
+  const step = width / beats;
+  let d = `M0 ${base}`;
+  for (let i = 0; i < beats; i++) {
+    const x = i * step + step * 0.3;
+    const h = spike * amp;
+    d += ` H${x.toFixed(1)} l6 ${(-h * 0.14).toFixed(1)} l6 ${(h * 0.14).toFixed(1)} h5`;
+    d += ` l5 ${(h * 0.12).toFixed(1)} l7 ${(-h * 1.12).toFixed(1)} l8 ${(h * 1.45).toFixed(1)} l6 ${(-h * 0.45).toFixed(1)}`;
+    d += ` h10 l9 ${(-h * 0.22).toFixed(1)} l9 ${(h * 0.22).toFixed(1)}`;
+  }
+  return `${d} H${width}`;
+}
+
+const HERO_EKG = ekgPath({ width: 1600, base: 72, beats: 7, amp: 1 });
+const MINI = {
+  HEALTHY: ekgPath({ width: 220, base: 40, beats: 3, amp: 0.62 }),
+  ANXIOUS: ekgPath({ width: 220, base: 40, beats: 5, amp: 0.42 }),
+  DYING: ekgPath({ width: 220, base: 40, beats: 1, amp: 0.3 }),
+  COMA: ekgPath({ width: 220, base: 40, beats: 1, amp: 0.08 }),
+  DEAD: ekgPath({ width: 220, base: 40, beats: 0, amp: 0 }),
+};
 
 function BuyButton({ className = '' }) {
   return site.buyUrl ? (
@@ -19,7 +45,7 @@ const STEPS = [
 
 export default function Home() {
   return (
-    <>
+    <VitalsProvider>
       <header className="nav">
         <a href="#top" className="brand">
           <Logo size={32} id="nav" />
@@ -35,12 +61,14 @@ export default function Home() {
       </header>
 
       <main id="top">
-        {/* HERO: the mark sits behind the wordmark and breathes */}
+        {/* HERO: the mark breathes behind the wordmark */}
         <section className="hero">
+          <div className="hero-glow" aria-hidden="true" />
           <div className="hero-mark" aria-hidden="true">
             <span className="ring ring-1" />
             <span className="ring ring-2" />
-            <Logo size={620} id="hero" className="hero-logo" title="" />
+            <span className="ring ring-3" />
+            <Logo size={640} id="hero" className="hero-logo" title="" />
           </div>
           <div className="hero-copy">
             <p className="eyebrow mono"><span className="live-dot" /> AI agent · Robinhood Chain</p>
@@ -56,95 +84,121 @@ export default function Home() {
               <BuyButton />
               <a className="btn btn-ghost" href="#monitor">Check its pulse</a>
             </div>
+            <HeroStats />
             {site.contract && <p className="contract mono">CA: {site.contract}</p>}
           </div>
+          <svg className="hero-ekg" viewBox="0 0 1600 120" preserveAspectRatio="none" aria-hidden="true">
+            <path d={HERO_EKG} className="hero-ekg-base" />
+            <path d={HERO_EKG} className="hero-ekg-pulse" pathLength="1" />
+          </svg>
         </section>
 
+        <Ticker />
+
         <section id="monitor" className="section">
-          <div className="section-head">
+          <Reveal className="section-head">
+            <span className="kicker mono">01 — Vital signs</span>
             <h2>Bedside monitor</h2>
             <p className="muted">Every spike is a real trade. When the line goes flat, it’s over.</p>
-          </div>
-          <Monitor />
+          </Reveal>
+          <Reveal delay={80}><Monitor /></Reveal>
         </section>
 
         <section id="how" className="section">
-          <div className="section-head">
+          <Reveal className="section-head">
+            <span className="kicker mono">02 — The rules</span>
             <h2>How it lives. How it dies.</h2>
-          </div>
+          </Reveal>
           <div className="steps">
-            {STEPS.map((s) => (
-              <article key={s.n} className="card step">
-                <span className="step-n mono">{s.n}</span>
-                <h3>{s.title}</h3>
-                <p className="muted">{s.body}</p>
-              </article>
+            {STEPS.map((s, i) => (
+              <Reveal key={s.n} delay={i * 90}>
+                <article className="card step">
+                  <span className="step-n mono">{s.n}</span>
+                  <h3>{s.title}</h3>
+                  <p className="muted">{s.body}</p>
+                </article>
+              </Reveal>
             ))}
           </div>
 
-          <div className="ladder card">
-            {Object.entries(STATUS).map(([key, s]) => (
-              <div key={key} className="rung">
-                <span className="rung-dot" style={{ background: s.color }} />
-                <span className="rung-name">{s.label}</span>
-                <span className="rung-rule mono">{s.rule}</span>
-                <span className="rung-mood muted">{s.mood}</span>
-              </div>
+          <div className="statuses">
+            {Object.entries(STATUS).map(([key, s], i) => (
+              <Reveal key={key} delay={i * 70}>
+                <div className="status-card" style={{ '--c': s.color }}>
+                  <div className="status-top">
+                    <span className="status-dot" />
+                    <span className="status-name">{s.label}</span>
+                  </div>
+                  <svg className="status-ekg" viewBox="0 0 220 64" preserveAspectRatio="none" aria-hidden="true">
+                    <path d={MINI[key]} />
+                  </svg>
+                  <span className="status-rule mono">{s.rule}</span>
+                  <p className="muted">{s.mood}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </section>
 
         <section id="inheritance" className="section">
-          <div className="section-head">
+          <Reveal className="section-head">
+            <span className="kicker mono">03 — The will</span>
             <h2>The inheritance</h2>
             <p className="muted">
               30% of the Pons creator fee goes to the agent’s treasury, which buys back {site.ticker} and holds it as its
               life savings. The other 70% keeps the lights on: servers, AI, gas and listings. When it dies, the savings are split:
             </p>
-          </div>
-          <div className="split card">
-            <div className="split-bar">
-              {INHERITANCE.map((p) => (
-                <span key={p.key} className={`split-seg seg-${p.key}`} style={{ flexBasis: `${p.pct}%` }}>{p.pct}%</span>
-              ))}
-            </div>
-            <div className="split-legend">
-              {INHERITANCE.map((p) => (
-                <div key={p.key} className="legend-item">
-                  <span className={`legend-dot seg-${p.key}`} />
-                  <div>
-                    <b>{p.pct}% · {p.label}</b>
-                    <p className="muted">{p.note}</p>
+          </Reveal>
+          <Reveal delay={80}>
+            <div className="split card">
+              <div className="split-bar">
+                {INHERITANCE.map((p) => (
+                  <span key={p.key} className={`split-seg seg-${p.key}`} style={{ flexBasis: `${p.pct}%` }}>{p.pct}%</span>
+                ))}
+              </div>
+              <div className="split-legend">
+                {INHERITANCE.map((p) => (
+                  <div key={p.key} className="legend-item">
+                    <span className={`legend-dot seg-${p.key}`} />
+                    <div>
+                      <b>{p.pct}% · {p.label}</b>
+                      <p className="muted">{p.note}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <SaviorCheck />
             </div>
-            <SaviorCheck />
-          </div>
+          </Reveal>
         </section>
 
         <section className="section">
-          <div className="section-head">
+          <Reveal className="section-head">
+            <span className="kicker mono">04 — Its voice</span>
             <h2>From the bedside</h2>
             <p className="muted">It posts on X. Its voice changes as its pulse does.</p>
-          </div>
-          <Feed />
+          </Reveal>
+          <Reveal delay={80}><Feed /></Reveal>
         </section>
 
         <section id="graveyard" className="section">
-          <div className="section-head">
+          <Reveal className="section-head">
+            <span className="kicker mono">05 — Those who came before</span>
             <h2>Graveyard</h2>
             <p className="muted">Every generation that flatlined, and what it left behind.</p>
-          </div>
-          <Graveyard />
+          </Reveal>
+          <Reveal delay={80}><Graveyard /></Reveal>
         </section>
 
-        <section className="section final">
-          <Logo size={72} id="final" />
-          <h2>Don’t let it flatline.</h2>
-          <div className="cta center">
-            <BuyButton />
-            {site.xUrl && <a className="btn btn-ghost" href={site.xUrl} target="_blank" rel="noopener noreferrer">Follow on X</a>}
+        <section className="final">
+          <div className="final-inner">
+            <Logo size={84} id="final" className="final-logo" />
+            <h2>Don’t let it flatline.</h2>
+            <p>Every trade is a breath. Every holder is family. Every death pays the living.</p>
+            <div className="cta center">
+              <BuyButton className="btn-light" />
+              {site.xUrl && <a className="btn btn-outline-light" href={site.xUrl} target="_blank" rel="noopener noreferrer">Follow on X</a>}
+            </div>
           </div>
         </section>
       </main>
@@ -155,6 +209,6 @@ export default function Home() {
           An experiment in on-chain mortality. Not financial advice, no promise of profit. Trade only what you can afford to lose.
         </p>
       </footer>
-    </>
+    </VitalsProvider>
   );
 }

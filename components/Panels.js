@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { site } from '@/lib/site';
 import { fmtAge, fmtNum } from '@/lib/useVitals';
+import Logo from './Logo';
 
 const api = (path) => `${site.agentApi.replace(/\/$/, '')}${path}`;
 
@@ -33,11 +34,15 @@ export function Feed() {
     <ul className="feed">
       {posts.map((p, i) => (
         <li key={i} className="post">
-          <div className="post-head">
-            <span className="post-name">Lastbreath</span>
-            <span className="mono muted">{p.kind} · {p.ago}</span>
+          <Logo size={42} id={`post-${i}`} className="post-avatar" />
+          <div className="post-body">
+            <div className="post-head">
+              <span className="post-name">Lastbreath</span>
+              <span className="post-handle muted">@lastbreath · {p.ago}</span>
+              <span className={`post-kind kind-${String(p.kind).toLowerCase()}`}>{p.kind}</span>
+            </div>
+            <p>{p.text}</p>
           </div>
-          <p>{p.text}</p>
         </li>
       ))}
     </ul>
