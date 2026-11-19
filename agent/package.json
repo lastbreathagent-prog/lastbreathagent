@@ -1,0 +1,12 @@
+{
+  "name": "lastbreath-agent",
+  "version": "0.1.0",
+  "description": "Lastbreath ($BREATH) - an AI agent on Robinhood Chain that lives only as long as people trade its token.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/index.js",
+    "simulate": "node src/simulate.js"
+  },
+  "license": "UNLICENSED"
+}
