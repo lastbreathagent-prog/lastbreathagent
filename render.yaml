@@ -1,0 +1,25 @@
+# Render blueprint for the Lastbreath agent (free web service, no credit card).
+services:
+  - type: web
+    name: lastbreath-agent
+    runtime: node
+    plan: free
+    rootDir: agent
+    buildCommand: echo "no dependencies"
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: DRY_RUN
+        value: "true"
+      - key: RPC_URL
+        sync: false
+      - key: BREATH_TOKEN
+        sync: false
+      - key: POOL_ADDRESSES
+        sync: false
+      - key: WILL_CONTRACT
+        sync: false
+      - key: AGENT_WALLET
+        sync: false
