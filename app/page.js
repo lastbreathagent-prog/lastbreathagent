@@ -1,5 +1,7 @@
 import Logo from '@/components/Logo';
 import MobileBar from '@/components/MobileBar';
+import StatusStack from '@/components/StatusStack';
+import { MergeArt, FadingBars, SplitArt } from '@/components/Illustrations';
 import Monitor from '@/components/Monitor';
 import { VitalsProvider } from '@/components/VitalsProvider';
 import { HeroStats, Ticker, Reveal } from '@/components/Live';
@@ -23,13 +25,6 @@ function ekgPath({ width, base, beats, amp, spike = 46 }) {
 }
 
 const HERO_EKG = ekgPath({ width: 1600, base: 72, beats: 7, amp: 1 });
-const MINI = {
-  HEALTHY: ekgPath({ width: 220, base: 40, beats: 3, amp: 0.62 }),
-  ANXIOUS: ekgPath({ width: 220, base: 40, beats: 5, amp: 0.42 }),
-  DYING: ekgPath({ width: 220, base: 40, beats: 1, amp: 0.3 }),
-  COMA: ekgPath({ width: 220, base: 40, beats: 1, amp: 0.08 }),
-  DEAD: ekgPath({ width: 220, base: 40, beats: 0, amp: 0 }),
-};
 
 function BuyButton({ className = '' }) {
   return site.buyUrl ? (
@@ -40,9 +35,9 @@ function BuyButton({ className = '' }) {
 }
 
 const STEPS = [
-  { n: '01', title: 'Every trade is a heartbeat', body: 'Each buy or sell of $BREATH, on any platform, counts as one beat. Dust trades and bot spam don’t.' },
-  { n: '02', title: '24 hours of silence kills it', body: 'As trading slows it gets anxious, then starts dying. No trade for 6 hours puts it in a coma. 24 hours and it flatlines.' },
-  { n: '03', title: 'Its death pays the living', body: 'When it dies, everything in its treasury is split among holders and saviors. Then a new generation is born.' },
+  { n: '01', tag: 'Trades → heartbeat', art: 'merge', title: 'Every trade is a heartbeat', body: 'Each buy or sell of $BREATH, on any platform, counts as one beat. Dust trades and bot spam don’t.' },
+  { n: '02', tag: 'Pulse per hour', art: 'bars', title: '24 hours of silence kills it', body: 'As trading slows it gets anxious, then starts dying. No trade for 6 hours puts it in a coma. 24 hours and it flatlines.' },
+  { n: '03', tag: 'One treasury, three heirs', art: 'split', title: 'Its death pays the living', body: 'When it dies, everything in its treasury is split among holders and saviors. Then a new generation is born.' },
 ];
 
 
@@ -138,10 +133,16 @@ export default function Home() {
             <span className="kicker mono">02 — The rules</span>
             <h2>How it lives. How it dies.</h2>
           </Reveal>
-          <div className="steps">
+          <div className="features">
             {STEPS.map((s, i) => (
               <Reveal key={s.n} delay={i * 90}>
-                <article className="card step">
+                <article className="feature">
+                  <div className="feature-art">
+                    <span className="feature-tag mono">{s.tag}</span>
+                    {s.art === 'merge' && <MergeArt />}
+                    {s.art === 'bars' && <FadingBars />}
+                    {s.art === 'split' && <SplitArt />}
+                  </div>
                   <span className="step-n mono">{s.n}</span>
                   <h3>{s.title}</h3>
                   <p className="muted">{s.body}</p>
@@ -150,23 +151,11 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="statuses">
-            {Object.entries(STATUS).map(([key, s], i) => (
-              <Reveal key={key} delay={i * 70}>
-                <div className="status-card" style={{ '--c': s.color }}>
-                  <div className="status-top">
-                    <span className="status-dot" />
-                    <span className="status-name">{s.label}</span>
-                  </div>
-                  <svg className="status-ekg" viewBox="0 0 220 64" preserveAspectRatio="none" aria-hidden="true">
-                    <path d={MINI[key]} />
-                  </svg>
-                  <span className="status-rule mono">{s.rule}</span>
-                  <p className="muted">{s.mood}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal className="stack-head">
+            <span className="kicker mono">Five states of life</span>
+            <h3>From healthy to flatline</h3>
+          </Reveal>
+          <Reveal delay={60}><StatusStack /></Reveal>
         </section>
 
         <section id="inheritance" className="section" data-orb="donut">
@@ -302,17 +291,6 @@ export default function Home() {
           </Reveal>
         </section>
 
-        <section className="final">
-          <div className="final-inner">
-            <Logo size={84} id="final" className="final-logo" />
-            <h2>Don’t let it flatline.</h2>
-            <p>Every trade is a breath. Every holder is family. Every death pays the living.</p>
-            <div className="cta center">
-              <BuyButton className="btn-light" />
-              {site.xUrl && <a className="btn btn-outline-light" href={site.xUrl} target="_blank" rel="noopener noreferrer">Follow on X</a>}
-            </div>
-          </div>
-        </section>
       </main>
 
       <footer className="footer">
