@@ -124,7 +124,7 @@ const Ekg = forwardRef(function Ekg({ status = 'HEALTHY', color = '#1f5bff', hei
     return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize); };
   }, []);
 
-  return <canvas ref={canvas} style={{ width: '100%', height, display: 'block' }} aria-hidden="true" />;
+  return <canvas ref={canvas} style={{ width: '100%', height: `var(--ekg-h, ${height}px)`, display: 'block' }} aria-hidden="true" />;
 });
 
 export default Ekg;
