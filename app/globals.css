@@ -1088,3 +1088,11 @@ html.menu-open .mobile-bar { transform: translateY(160%); }
 .kind-birth, .kind-rebirth, .kind-healthy { background: #eef2ff; color: var(--blue); }
 .kind-dead, .kind-coma { background: #f1f3f9; color: var(--navy); }
 .draft .post-kind { margin-left: 0; }
+
+/* Tap-to-copy contract address */
+.copy-ca { display: inline-flex; align-items: center; gap: 8px; max-width: 100%; padding: 8px 10px 8px 12px; border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18); background: rgba(255, 255, 255, 0.06); color: inherit; font: inherit; cursor: pointer; text-align: left; }
+.copy-ca:hover { border-color: rgba(255, 255, 255, 0.4); }
+.copy-ca-label { opacity: 0.7; }
+.copy-ca-addr { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.copy-ca-btn { flex: none; padding: 3px 8px; border-radius: 8px; background: #fff; color: var(--blue); font-weight: 700; font-size: 11px; }

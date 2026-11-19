@@ -4,6 +4,13 @@ import { useState } from 'react';
 import { site } from '@/lib/site';
 
 const CHAIN_HEX = '0x' + site.chainId.toString(16);
+const CHAIN_PARAMS = {
+  chainId: CHAIN_HEX,
+  chainName: 'Robinhood Chain',
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  rpcUrls: ['https://rpc.mainnet.chain.robinhood.com'],
+  blockExplorerUrls: ['https://robinhoodchain.blockscout.com'],
+};
 const word = (hex) => hex.replace(/^0x/, '').toLowerCase().padStart(64, '0');
 const uint = (n) => word(BigInt(n).toString(16));
 const fmtWei = (wei) => {
@@ -34,7 +41,13 @@ export default function ClaimWill() {
       try {
         await eth.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: CHAIN_HEX }] });
       } catch {
-        return setSt({ phase: 'error', msg: 'Switch your wallet to Robinhood Chain and try again.' });
+        // Wallet doesn't know the chain yet: offer to add it, then switch.
+        try {
+          await eth.request({ method: 'wallet_addEthereumChain', params: [CHAIN_PARAMS] });
+          await eth.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: CHAIN_HEX }] });
+        } catch {
+          return setSt({ phase: 'error', msg: 'Switch your wallet to Robinhood Chain and try again.' });
+        }
       }
       setSt({ phase: 'loading', msg: 'Reading the will…' });
       const api = site.agentApi.replace(/\/$/, '');

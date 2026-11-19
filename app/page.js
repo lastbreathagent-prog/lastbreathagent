@@ -9,6 +9,7 @@ import { VitalsProvider } from '@/components/VitalsProvider';
 import { HeroStats, Ticker, Reveal } from '@/components/Live';
 import HeroScene, { PulseButton, SoundToggle } from '@/components/HeroScene';
 import Nav from '@/components/Nav';
+import CopyCA from '@/components/CopyCA';
 import { Feed, Graveyard } from '@/components/Panels';
 import { site, STATUS, INHERITANCE, NAV_LINKS } from '@/lib/site';
 
@@ -90,7 +91,7 @@ export default function Home() {
               </div>
               <HeroStats />
               <SoundToggle />
-              {site.contract && <p className="contract mono">CA: {site.contract}</p>}
+              <CopyCA className="contract" soon="" />
             </div>
           </HeroScene>
           <svg className="hero-ekg" viewBox="0 0 1600 120" preserveAspectRatio="none" aria-hidden="true">
@@ -260,7 +261,7 @@ export default function Home() {
             <a href="#buy">How to buy</a>
             <a href="#graveyard">Graveyard</a>
             <a href="#voice">Its posts</a>
-            {site.contract ? <span className="footer2-ca mono">CA {site.contract}</span> : <span className="footer2-ca mono">CA: soon on Pons</span>}
+            <CopyCA className="footer2-ca" />
           </div>
         </div>
         <div className="footer2-bottom">
