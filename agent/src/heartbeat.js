@@ -15,7 +15,8 @@ export function classifyTrade(transfer, cfg) {
   if (pools.includes(from) && !pools.includes(to)) { side = 'buy'; wallet = to; }
   else if (pools.includes(to) && !pools.includes(from)) { side = 'sell'; wallet = from; }
   if (!side) return null; // plain wallet-to-wallet transfer, not a trade
-  if (cfg.treasuryAddress && wallet === cfg.treasuryAddress) return null; // agent buybacks don't keep it alive
+  // the agent's own buybacks never keep it alive
+  if ([cfg.treasuryAddress, cfg.willContract, cfg.agentWallet].filter(Boolean).includes(wallet)) return null;
   if (transfer.amount < cfg.minTradeTokens) return null; // dust
   return { wallet, side };
 }

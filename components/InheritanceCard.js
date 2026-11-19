@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useLive } from './VitalsProvider';
 import { SaviorCheck } from './Panels';
+import ClaimWill from './ClaimWill';
 import { fmtNum } from '@/lib/useVitals';
 import { INHERITANCE } from '@/lib/site';
 
@@ -79,6 +80,7 @@ export default function InheritanceCard() {
         </ul>
       </div>
       <SaviorCheck />
+      <ClaimWill />
     </div>
   );
 }

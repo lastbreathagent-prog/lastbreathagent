@@ -2,7 +2,7 @@
 const TRANSFER_TOPIC = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
 
 let rpcId = 0;
-async function rpc(cfg, method, params) {
+export async function rpc(cfg, method, params) {
   const res = await fetch(cfg.rpcUrl, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -60,4 +60,29 @@ export async function balanceOf(cfg, address) {
   const data = '0x70a08231' + address.toLowerCase().replace('0x', '').padStart(64, '0');
   const raw = await rpc(cfg, 'eth_call', [{ to: cfg.tokenAddress, data }, 'latest']);
   return toTokens(raw, cfg.tokenDecimals);
+}
+
+/** Raw $BREATH transfers (exact uint256 values) in [fromBlock, toBlock], for will snapshots. */
+export async function fetchTransfersRaw(cfg, fromBlock, toBlock) {
+  const out = [];
+  for (let start = fromBlock; start <= toBlock; start += cfg.maxBlockRange) {
+    const end = Math.min(start + cfg.maxBlockRange - 1, toBlock);
+    const logs = await rpc(cfg, 'eth_getLogs', [{ address: cfg.tokenAddress, fromBlock: hex(start), toBlock: hex(end), topics: [TRANSFER_TOPIC] }]);
+    for (const l of logs) {
+      out.push({ from: topicToAddress(l.topics[1]), to: topicToAddress(l.topics[2]), value: l.data && l.data !== '0x' ? BigInt(l.data) : 0n, block: Number(l.blockNumber), logIndex: Number(l.logIndex) });
+    }
+  }
+  return out.sort((a, b) => a.block - b.block || a.logIndex - b.logIndex);
+}
+
+/** LastbreathWill.freeBalance() in token wei. */
+export async function willFreeBalance(cfg) {
+  const raw = await rpc(cfg, 'eth_call', [{ to: cfg.willContract, data: '0x25185d3e' }, 'latest']);
+  return raw && raw !== '0x' ? BigInt(raw) : 0n;
+}
+
+/** LastbreathWill.currentGeneration() */
+export async function willGeneration(cfg) {
+  const raw = await rpc(cfg, 'eth_call', [{ to: cfg.willContract, data: '0x8ddb428a' }, 'latest']);
+  return raw && raw !== '0x' ? Number(BigInt(raw)) : 0;
 }

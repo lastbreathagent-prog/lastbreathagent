@@ -11,6 +11,12 @@ export const config = {
   poolAddresses: list('POOL_ADDRESSES'),
   // Treasury wallet/contract. Its own buybacks never count as a heartbeat.
   treasuryAddress: env('TREASURY_ADDRESS', '').toLowerCase(),
+  // LastbreathWill contract (holds the treasury and pays the will). Defaults to TREASURY_ADDRESS.
+  willContract: (env('WILL_CONTRACT', '') || env('TREASURY_ADDRESS', '')).toLowerCase(),
+  // Wallet the agent uses for buybacks; its buys never count as a heartbeat.
+  agentWallet: env('AGENT_WALLET', '').toLowerCase(),
+  // Public URL where will snapshots are served (shown in settle()).
+  publicUrl: env('PUBLIC_URL', ''),
   tokenDecimals: num('TOKEN_DECIMALS', 18),
   startBlock: num('START_BLOCK', 0),
   pollSeconds: num('POLL_SECONDS', 60),

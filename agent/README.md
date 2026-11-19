@@ -50,3 +50,15 @@ npm start                # jalankan agent live
 - **Pembagian warisan on-chain.** Agent hanya mengumumkan. Pembagian 70/20/10 harus dijalankan kontrak warisan (tahap smart contract).
 - **Buyback otomatis.** Treasury yang membeli $BREATH dari 30% creator fee belum dibuat.
 - **Alamat kontrak Pons.** Isi `POOL_ADDRESSES` dengan alamat bonding curve dan pool setelah graduation.
+
+## Warisan (wills)
+
+Saat agent mati, `src/will.js` membuat snapshot: saldo semua holder pada blok kematian (dari log Transfer), bagian 70% holder dan 20% savior dari treasury bebas di kontrak `LastbreathWill`, lalu Merkle tree untuk `settle()`. File disimpan di `data/wills/` dan disajikan di:
+
+| Endpoint | Isi |
+| --- | --- |
+| `GET /will/latest` | ringkasan will terakhir |
+| `GET /will/<gen>` | snapshot lengkap (untuk diverifikasi siapa saja) |
+| `GET /will/<gen>/<wallet>` | jumlah + proof untuk satu wallet (dipakai tombol Claim) |
+
+Lihat `contracts/README.md` untuk deploy kontrak dan langkah settle.
