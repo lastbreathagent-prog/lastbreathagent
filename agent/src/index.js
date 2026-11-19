@@ -23,10 +23,16 @@ function save(state) {
   fs.renameSync(tmp, cfg.stateFile); // atomic write
 }
 
+// Pre-launch: no token yet. The agent is "unborn": it serves the API but does not read the chain.
+const PRELAUNCH = !cfg.tokenAddress;
+
 function checkConfig() {
+  if (PRELAUNCH) {
+    console.warn('BREATH_TOKEN not set: PRE-LAUNCH mode. The agent is unborn and waits. Set BREATH_TOKEN + POOL_ADDRESSES and restart to give birth.');
+    return;
+  }
   const missing = [];
   if (!cfg.rpcUrl) missing.push('RPC_URL');
-  if (!cfg.tokenAddress) missing.push('BREATH_TOKEN');
   if (!cfg.poolAddresses.length) missing.push('POOL_ADDRESSES');
   if (missing.length) {
     console.error(`Missing env: ${missing.join(', ')}. See .env.example`);
@@ -36,7 +42,7 @@ function checkConfig() {
   if (cfg.dryRun) console.warn('DRY_RUN=true: posts are printed, not published to X.');
 }
 
-let state = load();
+let state = PRELAUNCH ? initialState(now()) : load();
 
 const willDir = path.join(path.dirname(cfg.stateFile), 'wills');
 
@@ -98,6 +104,10 @@ function startApi() {
     res.setHeader('access-control-allow-origin', '*');
     res.setHeader('content-type', 'application/json');
     const t = now();
+    if (req.url === '/' || req.url === '/health') return res.end(JSON.stringify({ ok: true, mode: PRELAUNCH ? 'prelaunch' : 'live' }));
+    if (PRELAUNCH && req.url === '/status') {
+      return res.end(JSON.stringify({ generation: 1, name: personaFor(1).name, status: 'UNBORN', bpm: 0, treasury: 0, secondsToDeath: null, age: 0, saviors: 0, persona: personaFor(1), beats: [], inheritance: cfg.inheritance }));
+    }
     if (req.url === '/status') {
       const v = vitals(state, t, cfg);
       const beats = state.beats.filter((b) => b.t >= t - cfg.windowSec).map((b) => ({ t: b.t, side: b.side }));
@@ -125,6 +135,9 @@ function startApi() {
 
 checkConfig();
 startApi();
+if (!PRELAUNCH) startLoop();
+
+function startLoop() {
 let running = false;
 const loop = async () => {
   if (running) return;
@@ -134,3 +147,4 @@ const loop = async () => {
 };
 loop();
 setInterval(loop, cfg.pollSeconds * 1000);
+}

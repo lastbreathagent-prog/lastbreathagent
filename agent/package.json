@@ -6,7 +6,8 @@
   "engines": { "node": ">=20" },
   "scripts": {
     "start": "node --env-file-if-exists=.env src/index.js",
-    "simulate": "node src/simulate.js"
+    "simulate": "node src/simulate.js",
+    "check": "node --env-file-if-exists=.env src/check.js"
   },
   "license": "UNLICENSED"
 }

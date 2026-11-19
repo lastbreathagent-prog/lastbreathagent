@@ -50,7 +50,7 @@ export const config = {
 
   // --- LLM (Anthropic) ---
   anthropicKey: env('ANTHROPIC_API_KEY', ''),
-  model: env('LLM_MODEL', 'claude-sonnet-4-5'),
+  model: env('LLM_MODEL', 'claude-sonnet-5-5'),
 
   // --- X (Twitter) API v2, OAuth 1.0a user context ---
   x: {
@@ -63,5 +63,5 @@ export const config = {
 
   // --- Storage + API ---
   stateFile: env('STATE_FILE', './data/state.json'),
-  apiPort: num('API_PORT', 8787),
+  apiPort: num('PORT', num('API_PORT', 8787)), // hosts like Railway/Render set PORT
 };
