@@ -19,7 +19,8 @@ deploy() { forge create "$@" --rpc-url "$RPC" --private-key "$PRIVATE_KEY" --bro
 
 CHAIN=$(cast chain-id --rpc-url "$RPC" 2>/dev/null || true)
 if [[ -z "$CHAIN" ]]; then echo "❌ Cannot reach the RPC at $RPC. Check your connection or set RPC_URL to another endpoint."; exit 1; fi
-if [[ "$CHAIN" != "46630" ]]; then echo "❌ RPC is on chain $CHAIN, expected Robinhood Chain testnet (46630)."; exit 1; fi
+EXPECT="${EXPECT_CHAIN:-46630}"
+if [[ "$CHAIN" != "$EXPECT" ]]; then echo "❌ RPC is on chain $CHAIN, expected $EXPECT."; exit 1; fi
 BAL=$(cast balance "$ME" --rpc-url "$RPC")
 if [[ "$BAL" == "0" ]]; then echo "❌ Wallet $ME has 0 testnet ETH. Use the faucet first."; exit 1; fi
 say "Chain id: $CHAIN   wallet: $ME   balance: $(cast balance "$ME" --ether --rpc-url "$RPC") ETH"
