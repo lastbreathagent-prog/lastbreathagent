@@ -15,7 +15,7 @@ HEIR2=0x000000000000000000000000000000000000b0b0   # a second, fake heir
 E=1000000000000000000
 
 say() { printf '\n\033[1;34m▶ %s\033[0m\n' "$*"; }
-deploy() { forge create "$@" --rpc-url "$RPC" --private-key "$PRIVATE_KEY" --broadcast 2>&1 | tee /dev/stderr | grep -i "Deployed to" | awk '{print $3}'; }
+deploy() { forge create --rpc-url "$RPC" --private-key "$PRIVATE_KEY" --broadcast "$@" 2>&1 | tee /dev/stderr | grep -i "Deployed to" | awk '{print $3}'; }
 
 CHAIN=$(cast chain-id --rpc-url "$RPC" 2>/dev/null || true)
 if [[ -z "$CHAIN" ]]; then echo "❌ Cannot reach the RPC at $RPC. Check your connection or set RPC_URL to another endpoint."; exit 1; fi
