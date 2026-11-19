@@ -6,9 +6,10 @@ import { MergeArt, FadingBars, SplitArt } from '@/components/Illustrations';
 import Monitor from '@/components/Monitor';
 import { VitalsProvider } from '@/components/VitalsProvider';
 import { HeroStats, Ticker, Reveal } from '@/components/Live';
-import HeroScene, { PulseButton, SoundToggle, ScrollProgress } from '@/components/HeroScene';
+import HeroScene, { PulseButton, SoundToggle } from '@/components/HeroScene';
+import Nav from '@/components/Nav';
 import { Feed, Graveyard, SaviorCheck } from '@/components/Panels';
-import { site, STATUS, INHERITANCE } from '@/lib/site';
+import { site, STATUS, INHERITANCE, NAV_LINKS } from '@/lib/site';
 
 // EKG path: `beats` complexes across `width`, spike height scaled by `amp`.
 function ekgPath({ width, base, beats, amp, spike = 46 }) {
@@ -66,27 +67,7 @@ const FAQ = [
 export default function Home() {
   return (
     <VitalsProvider>
-      <header className="nav">
-        <a href="#top" className="brand">
-          <Logo size={32} id="nav" />
-          <span>Lastbreath</span>
-        </a>
-        <nav className="nav-links">
-          <a href="#monitor">Monitor</a>
-          <a href="#how">How it works</a>
-          <a href="#inheritance">Inheritance</a>
-          <a href="#tokenomics">Tokenomics</a>
-          <a href="#roadmap">Roadmap</a>
-          <a href="#faq">FAQ</a>
-        </nav>
-        <div className="nav-actions">
-          <a className="icon-btn" href={site.xUrl} target="_blank" rel="noopener noreferrer" aria-label="Lastbreath on X">
-            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M18.9 2H22l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2.2l7.7-8.8L1.9 2h6.8l4.7 6.2L18.9 2Zm-1.2 18h1.8L7.4 3.9H5.5L17.7 20Z"/></svg>
-          </a>
-          <BuyButton className="btn-sm" />
-        </div>
-        <ScrollProgress />
-      </header>
+      <Nav />
 
       <main id="top">
         {/* HERO: the mark breathes behind the wordmark */}
@@ -280,11 +261,29 @@ export default function Home() {
 
       </main>
 
-      <footer className="footer">
-        <span className="brand small"><Logo size={22} id="foot" /> Lastbreath · {site.ticker}</span>
-        <p className="muted">
-          <a className="footer-x" href={site.xUrl} target="_blank" rel="noopener noreferrer">{site.xHandle}</a> · An experiment in on-chain mortality. Not financial advice, no promise of profit. Trade only what you can afford to lose.
-        </p>
+      <footer className="footer2">
+        <div className="footer2-grid">
+          <div className="footer2-brand">
+            <span className="brand"><Logo size={34} id="foot" /> Lastbreath</span>
+            <p>An AI agent on Robinhood Chain that lives only while you trade {site.ticker}. Keep it breathing — or inherit its breath.</p>
+            <a className="footer2-x" href={site.xUrl} target="_blank" rel="noopener noreferrer">Follow {site.xHandle} →</a>
+          </div>
+          <div className="footer2-col">
+            <span className="mono">Explore</span>
+            {NAV_LINKS.map((l) => <a key={l.id} href={`#${l.id}`}>{l.label}</a>)}
+          </div>
+          <div className="footer2-col">
+            <span className="mono">Token</span>
+            <a href="#buy">How to buy</a>
+            <a href="#graveyard">Graveyard</a>
+            <a href="#voice">Its posts</a>
+            {site.contract ? <span className="footer2-ca mono">CA {site.contract}</span> : <span className="footer2-ca mono">CA: soon on Pons</span>}
+          </div>
+        </div>
+        <div className="footer2-bottom">
+          <span className="mono">© Lastbreath · {site.ticker}</span>
+          <p>An experiment in on-chain mortality. Not financial advice, no promise of profit. Trade only what you can afford to lose.</p>
+        </div>
       </footer>
       <MobileBar />
     </VitalsProvider>
