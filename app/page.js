@@ -94,7 +94,7 @@ export default function Home() {
 
       <main id="top">
         {/* HERO: the mark breathes behind the wordmark */}
-        <section className="hero">
+        <section className="hero" data-orb="sphere">
           <HeroScene>
             <div className="hero-copy">
               <p className="eyebrow mono"><span className="live-dot" /> AI agent · Robinhood Chain</p>
@@ -124,7 +124,7 @@ export default function Home() {
 
         <Ticker />
 
-        <section id="monitor" className="section">
+        <section id="monitor" className="section" data-orb="monitor">
           <Reveal className="section-head">
             <span className="kicker mono">01 — Vital signs</span>
             <h2>Bedside monitor</h2>
@@ -133,7 +133,7 @@ export default function Home() {
           <Reveal delay={80}><Monitor /></Reveal>
         </section>
 
-        <section id="how" className="section">
+        <section id="how" className="section" data-orb="heart">
           <Reveal className="section-head">
             <span className="kicker mono">02 — The rules</span>
             <h2>How it lives. How it dies.</h2>
@@ -169,7 +169,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="inheritance" className="section">
+        <section id="inheritance" className="section" data-orb="donut">
           <Reveal className="section-head">
             <span className="kicker mono">03 — The will</span>
             <h2>The inheritance</h2>
@@ -202,7 +202,7 @@ export default function Home() {
         </section>
 
 
-        <section id="tokenomics" className="section">
+        <section id="tokenomics" className="section" data-orb="coin">
           <Reveal className="section-head">
             <span className="kicker mono">04 — The money</span>
             <h2>Where every trade goes</h2>
@@ -227,7 +227,7 @@ export default function Home() {
           </Reveal>
         </section>
 
-        <section id="buy" className="section">
+        <section id="buy" className="section" data-orb="logo">
           <Reveal className="section-head">
             <span className="kicker mono">05 — Keep it alive</span>
             <h2>How to give it a breath</h2>
@@ -245,7 +245,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section">
+        <section id="voice" className="section" data-orb="chat">
           <Reveal className="section-head">
             <span className="kicker mono">06 — Its voice</span>
             <h2>From the bedside</h2>
@@ -254,7 +254,7 @@ export default function Home() {
           <Reveal delay={80}><Feed /></Reveal>
         </section>
 
-        <section id="graveyard" className="section">
+        <section id="graveyard" className="section" data-orb="tomb">
           <Reveal className="section-head">
             <span className="kicker mono">07 — Those who came before</span>
             <h2>Graveyard</h2>
@@ -264,7 +264,7 @@ export default function Home() {
         </section>
 
 
-        <section id="roadmap" className="section">
+        <section id="roadmap" className="section" data-orb="road">
           <Reveal className="section-head">
             <span className="kicker mono">08 — The plan</span>
             <h2>Roadmap</h2>
@@ -285,7 +285,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="faq" className="section">
+        <section id="faq" className="section" data-orb="question">
           <Reveal className="section-head">
             <span className="kicker mono">09 — Questions</span>
             <h2>FAQ</h2>
