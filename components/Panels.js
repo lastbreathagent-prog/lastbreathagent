@@ -38,7 +38,7 @@ export function Feed() {
           <div className="post-body">
             <div className="post-head">
               <span className="post-name">Lastbreath</span>
-              <span className="post-handle muted">@lastbreath · {p.ago}</span>
+              <span className="post-handle muted">{site.xHandle} · {p.ago}</span>
               <span className={`post-kind kind-${String(p.kind).toLowerCase()}`}>{p.kind}</span>
             </div>
             <p>{p.text}</p>

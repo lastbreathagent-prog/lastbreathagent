@@ -58,7 +58,12 @@ export default function Home() {
           <a href="#inheritance">Inheritance</a>
           <a href="#graveyard">Graveyard</a>
         </nav>
-        <BuyButton className="btn-sm" />
+        <div className="nav-actions">
+          <a className="icon-btn" href={site.xUrl} target="_blank" rel="noopener noreferrer" aria-label="Lastbreath on X">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M18.9 2H22l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.3 22H2.2l7.7-8.8L1.9 2h6.8l4.7 6.2L18.9 2Zm-1.2 18h1.8L7.4 3.9H5.5L17.7 20Z"/></svg>
+          </a>
+          <BuyButton className="btn-sm" />
+        </div>
       </header>
 
       <main id="top">
@@ -202,7 +207,7 @@ export default function Home() {
       <footer className="footer">
         <span className="brand small"><Logo size={22} id="foot" /> Lastbreath · {site.ticker}</span>
         <p className="muted">
-          An experiment in on-chain mortality. Not financial advice, no promise of profit. Trade only what you can afford to lose.
+          <a className="footer-x" href={site.xUrl} target="_blank" rel="noopener noreferrer">{site.xHandle}</a> · An experiment in on-chain mortality. Not financial advice, no promise of profit. Trade only what you can afford to lose.
         </p>
       </footer>
     </VitalsProvider>

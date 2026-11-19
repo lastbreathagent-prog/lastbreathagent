@@ -450,3 +450,11 @@ p { margin: 0; line-height: 1.6; }
 @media (prefers-reduced-motion: reduce) {
   .hm-blob, .hm-orb-wrap, .hm-orb.thump, .hm-ripple, .hm-ekg-run, .hm-p { animation: none; }
 }
+
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.icon-btn {
+  display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%;
+  background: #fff; border: 1px solid var(--line); color: var(--navy); transition: color 0.15s, border-color 0.15s;
+}
+.icon-btn:hover { color: var(--blue); border-color: var(--blue); }
+.footer-x { color: var(--blue); font-weight: 600; }
