@@ -1,6 +1,6 @@
 # LastbreathWill — kontrak treasury & warisan
 
-Satu kontrak kecil tanpa dependency (`LastbreathWill.sol`, Solidity ^0.8.24).
+Satu kontrak kecil tanpa dependency (`src/LastbreathWill.sol`, Solidity ^0.8.24). Project Foundry: `forge test` menjalankan semua tes, `script/testnet.sh` menguji ujung-ke-ujung di testnet.
 
 ## Cara kerja
 
@@ -14,6 +14,17 @@ Satu kontrak kecil tanpa dependency (`LastbreathWill.sol`, Solidity ^0.8.24).
 | `setAgent`, `transferOwnership` | owner | Ganti wallet agent / pemilik. |
 
 Kepercayaan: agent yang menyusun snapshot. Setiap snapshot (daftar lengkap ahli waris + root) dipublikasikan di `/will/<gen>` pada API agent, jadi siapa pun bisa menghitung ulang sebelum klaim.
+
+## Tes lewat terminal (Ubuntu)
+
+```bash
+curl -L https://foundry.paradigm.xyz | bash && source ~/.bashrc && foundryup
+git clone https://github.com/lastbreathagent-prog/lastbreathagent && cd lastbreathagent/contracts
+forge test -vv                      # tes lokal, tanpa wallet
+cast wallet new                     # wallet khusus testnet
+export PRIVATE_KEY=0x...            # isi testnet ETH dari faucet dulu
+./script/testnet.sh                 # tes di Robinhood Chain testnet
+```
 
 ## Deploy (Remix, dari laptop)
 
