@@ -22,7 +22,7 @@ export async function GET(_req, { params }) {
       if (!s) return json({ error: 'agent has not run yet' }, 503);
       // The file is written every few minutes: move the clocks forward to now.
       const drift = Math.max(0, Math.floor(Date.now() / 1000) - (s.updatedAt || 0));
-      const out = { ...s, age: (s.age || 0) + (s.status === 'DEAD' ? 0 : drift) };
+      const out = { ...s, age: (s.age || 0) + (s.status === 'DEAD' || s.status === 'UNBORN' ? 0 : drift) };
       if (typeof s.secondsToDeath === 'number') out.secondsToDeath = Math.max(0, s.secondsToDeath - drift);
       return json(out);
     }
