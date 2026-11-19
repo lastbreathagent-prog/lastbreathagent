@@ -1,4 +1,5 @@
 import Logo from '@/components/Logo';
+import MobileBar from '@/components/MobileBar';
 import Monitor from '@/components/Monitor';
 import { VitalsProvider } from '@/components/VitalsProvider';
 import { HeroStats, Ticker, Reveal } from '@/components/Live';
@@ -44,6 +45,28 @@ const STEPS = [
   { n: '03', title: 'Its death pays the living', body: 'When it dies, everything in its treasury is split among holders and saviors. Then a new generation is born.' },
 ];
 
+
+const BUY_STEPS = [
+  { n: '1', title: 'Get a wallet on Robinhood Chain', body: 'Any EVM wallet works. Add Robinhood Chain and bridge a little ETH for gas and your first buy.' },
+  { n: '2', title: 'Open $BREATH on Pons', body: 'Use the official link on this page. Always double-check the contract address before you trade.' },
+  { n: '3', title: 'Trade = give it a breath', body: 'Every buy or sell is a heartbeat. Trade while it is Dying or in a Coma and you become a Savior.' },
+];
+
+const ROADMAP = [
+  { phase: 'Phase 1', name: 'Birth', state: 'now', items: ['Website and bedside monitor', 'X account and brand', 'Launch $BREATH on Pons', 'Agent goes live and starts posting'] },
+  { phase: 'Phase 2', name: 'Life', state: 'next', items: ['Treasury buybacks from the creator fee', 'Savior tracking on-chain', 'Inheritance contract tested and reviewed', 'Live data on this monitor'] },
+  { phase: 'Phase 3', name: 'Afterlife', state: 'later', items: ['First death and inheritance payout', 'Rebirth: new generations, new personalities', 'Graveyard history and lore', 'Community-voted names for future generations'] },
+];
+
+const FAQ = [
+  { q: 'What happens to my $BREATH when it dies?', a: 'Nothing is taken from you. Your tokens stay in your wallet. On death, the agent’s treasury is split: 70% to holders by balance, 20% to saviors, 10% to the next generation.' },
+  { q: 'Does trading on any platform count as a heartbeat?', a: 'Yes. The agent reads trades on-chain from the $BREATH pool, wherever they come from. Very small dust trades and spam from one wallet within a minute do not count.' },
+  { q: 'Who keeps the servers and the AI running?', a: 'On Pons, 70% of the 1% trading fee goes to the creator. Of that creator fee, 70% pays for servers, AI, gas and listings, and 30% goes to the agent’s treasury.' },
+  { q: 'How do I become a savior?', a: 'Trade while the agent is Dying or in a Coma. The trade that pulls it back is recorded, and saviors share 20% of the inheritance.' },
+  { q: 'Can it come back after dying?', a: 'The same generation cannot. 24 hours after a death, a new generation is born with a new name and personality, and the same $BREATH token.' },
+  { q: 'Is this financial advice?', a: 'No. Lastbreath is an experiment in on-chain mortality. There is no promise of profit. Only trade what you can afford to lose.' },
+];
+
 export default function Home() {
   return (
     <VitalsProvider>
@@ -56,7 +79,9 @@ export default function Home() {
           <a href="#monitor">Monitor</a>
           <a href="#how">How it works</a>
           <a href="#inheritance">Inheritance</a>
-          <a href="#graveyard">Graveyard</a>
+          <a href="#tokenomics">Tokenomics</a>
+          <a href="#roadmap">Roadmap</a>
+          <a href="#faq">FAQ</a>
         </nav>
         <div className="nav-actions">
           <a className="icon-btn" href={site.xUrl} target="_blank" rel="noopener noreferrer" aria-label="Lastbreath on X">
@@ -176,9 +201,53 @@ export default function Home() {
           </Reveal>
         </section>
 
+
+        <section id="tokenomics" className="section">
+          <Reveal className="section-head">
+            <span className="kicker mono">04 — The money</span>
+            <h2>Where every trade goes</h2>
+            <p className="muted">Fixed supply, launched fair on Pons: 100% of the supply goes into the bonding curve, with no team allocation.</p>
+          </Reveal>
+          <Reveal delay={80}>
+            <div className="flow">
+              <div className="flow-node flow-start"><span className="flow-k mono">Every trade</span><b>1% fee</b></div>
+              <span className="flow-arrow" aria-hidden="true" />
+              <div className="flow-split">
+                <div className="flow-node"><span className="flow-k mono">30%</span><b>Pons protocol</b></div>
+                <div className="flow-node flow-main"><span className="flow-k mono">70%</span><b>Creator fee</b></div>
+              </div>
+              <span className="flow-arrow" aria-hidden="true" />
+              <div className="flow-split">
+                <div className="flow-node"><span className="flow-k mono">70% of creator fee</span><b>Servers, AI, gas, listings</b></div>
+                <div className="flow-node flow-main"><span className="flow-k mono">30% of creator fee</span><b>Agent treasury → buys back $BREATH</b></div>
+              </div>
+              <span className="flow-arrow" aria-hidden="true" />
+              <div className="flow-node flow-end"><span className="flow-k mono">On death</span><b>70% holders · 20% saviors · 10% next gen</b></div>
+            </div>
+          </Reveal>
+        </section>
+
+        <section id="buy" className="section">
+          <Reveal className="section-head">
+            <span className="kicker mono">05 — Keep it alive</span>
+            <h2>How to give it a breath</h2>
+          </Reveal>
+          <div className="steps">
+            {BUY_STEPS.map((s, i) => (
+              <Reveal key={s.n} delay={i * 90}>
+                <article className="card step buy-step">
+                  <span className="buy-n">{s.n}</span>
+                  <h3>{s.title}</h3>
+                  <p className="muted">{s.body}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
         <section className="section">
           <Reveal className="section-head">
-            <span className="kicker mono">04 — Its voice</span>
+            <span className="kicker mono">06 — Its voice</span>
             <h2>From the bedside</h2>
             <p className="muted">It posts on X. Its voice changes as its pulse does.</p>
           </Reveal>
@@ -187,11 +256,50 @@ export default function Home() {
 
         <section id="graveyard" className="section">
           <Reveal className="section-head">
-            <span className="kicker mono">05 — Those who came before</span>
+            <span className="kicker mono">07 — Those who came before</span>
             <h2>Graveyard</h2>
             <p className="muted">Every generation that flatlined, and what it left behind.</p>
           </Reveal>
           <Reveal delay={80}><Graveyard /></Reveal>
+        </section>
+
+
+        <section id="roadmap" className="section">
+          <Reveal className="section-head">
+            <span className="kicker mono">08 — The plan</span>
+            <h2>Roadmap</h2>
+          </Reveal>
+          <div className="roadmap">
+            {ROADMAP.map((r, i) => (
+              <Reveal key={r.name} delay={i * 100}>
+                <article className={`phase phase-${r.state}`}>
+                  <div className="phase-head">
+                    <span className="mono phase-k">{r.phase}</span>
+                    <span className={`phase-tag mono`}>{r.state === 'now' ? 'IN PROGRESS' : r.state === 'next' ? 'NEXT' : 'LATER'}</span>
+                  </div>
+                  <h3>{r.name}</h3>
+                  <ul>{r.items.map((it) => <li key={it}>{it}</li>)}</ul>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        <section id="faq" className="section">
+          <Reveal className="section-head">
+            <span className="kicker mono">09 — Questions</span>
+            <h2>FAQ</h2>
+          </Reveal>
+          <Reveal delay={60}>
+            <div className="faq">
+              {FAQ.map((f) => (
+                <details key={f.q} className="faq-item">
+                  <summary>{f.q}<span className="faq-icon" aria-hidden="true" /></summary>
+                  <p className="muted">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </Reveal>
         </section>
 
         <section className="final">
@@ -213,6 +321,7 @@ export default function Home() {
           <a className="footer-x" href={site.xUrl} target="_blank" rel="noopener noreferrer">{site.xHandle}</a> · An experiment in on-chain mortality. Not financial advice, no promise of profit. Trade only what you can afford to lose.
         </p>
       </footer>
+      <MobileBar />
     </VitalsProvider>
   );
 }
