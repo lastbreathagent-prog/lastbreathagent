@@ -789,3 +789,65 @@ body { font-size: 15px; }
 @media (prefers-reduced-motion: reduce) {
   .art-line, .art-out-run, .bar, .iso-on .iso-ekg path { animation: none; }
 }
+
+/* ===================== v7: tokenomics receipt ===================== */
+.receipt {
+  max-width: 760px; background: #fff; border: 1px solid var(--line); border-radius: 24px; padding: 22px;
+  display: grid; gap: 18px; box-shadow: var(--shadow);
+}
+.receipt-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
+.receipt-amt { font-size: clamp(30px, 5vw, 42px); font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; margin-top: 4px; }
+.receipt-amt small { font-size: 14px; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+.receipt-fee {
+  display: grid; justify-items: end; gap: 2px; padding: 10px 14px; border-radius: 14px; color: #fff;
+  background: linear-gradient(160deg, var(--logo-1), var(--logo-2));
+}
+.receipt-fee span { font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: #c9d7ff; }
+.receipt-fee b { font-size: 20px; font-variant-numeric: tabular-nums; }
+
+.receipt-range { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 999px; outline: none;
+  background: linear-gradient(90deg, var(--logo-1) var(--p), #e3eaff var(--p)); }
+.receipt-range::-webkit-slider-thumb { -webkit-appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #fff;
+  border: 3px solid var(--logo-1); box-shadow: 0 4px 12px rgba(31, 91, 255, 0.4); cursor: pointer; }
+.receipt-range::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 3px solid var(--logo-1); cursor: pointer; }
+.receipt-presets { display: flex; gap: 8px; flex-wrap: wrap; margin-top: -6px; }
+.chip { font-size: 12px; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); background: #f6f8ff; color: var(--navy); cursor: pointer; }
+.chip.on { background: var(--logo-1); border-color: var(--logo-1); color: #fff; }
+
+.receipt-bar { display: flex; height: 48px; border-radius: 14px; overflow: hidden; gap: 3px; }
+.rb { position: relative; display: grid; place-items: center; overflow: hidden; color: #fff; }
+.rb em { position: relative; font-style: normal; font-size: 12px; font-weight: 700; }
+.rb-pons { background: #c9d7ff; color: var(--navy); }
+.rb-ops { background: #6b9bff; }
+.rb-treasury { background: linear-gradient(160deg, var(--logo-1), var(--logo-2)); }
+.rb-flow {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(110deg, rgba(255, 255, 255, 0) 0 14px, rgba(255, 255, 255, 0.22) 14px 20px);
+  background-size: 200% 100%; animation: flowStripes 1.6s linear infinite;
+}
+@keyframes flowStripes { to { background-position: -40px 0; } }
+
+.receipt-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.rr { display: grid; grid-template-columns: 12px auto 1fr auto; align-items: center; gap: 12px; }
+.rr-dot { width: 12px; height: 12px; border-radius: 4px; }
+.rr-text { display: grid; gap: 1px; }
+.rr-text b { font-size: 14px; }
+.rr-text small { font-size: 12px; }
+.rr-lead { border-bottom: 1.5px dotted #c9d7ff; height: 1px; align-self: end; margin-bottom: 6px; }
+.rr-val { font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.rr-treasury .rr-val { color: var(--logo-1); }
+
+.receipt-will { display: grid; gap: 10px; padding-top: 16px; border-top: 1px dashed #c9d7ff; }
+.will-bar { display: flex; gap: 3px; height: 30px; border-radius: 10px; overflow: hidden; font-size: 11px; font-weight: 700; color: #fff; }
+.will-bar span { display: grid; place-items: center; white-space: nowrap; overflow: hidden; }
+.will-bar span:nth-child(1) { background: var(--logo-1); }
+.will-bar span:nth-child(2) { background: var(--logo-2); }
+.will-bar span:nth-child(3) { background: #8fb0ff; }
+.receipt-will small { font-size: 12px; }
+
+@media (max-width: 520px) {
+  .receipt { padding: 16px; }
+  .rr { grid-template-columns: 12px 1fr auto; }
+  .rr-lead { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .rb-flow { animation: none; } }

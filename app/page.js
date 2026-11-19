@@ -1,6 +1,7 @@
 import Logo from '@/components/Logo';
 import MobileBar from '@/components/MobileBar';
 import StatusStack from '@/components/StatusStack';
+import TokenFlow from '@/components/TokenFlow';
 import { MergeArt, FadingBars, SplitArt } from '@/components/Illustrations';
 import Monitor from '@/components/Monitor';
 import { VitalsProvider } from '@/components/VitalsProvider';
@@ -195,24 +196,10 @@ export default function Home() {
           <Reveal className="section-head">
             <span className="kicker mono">04 — The money</span>
             <h2>Where every trade goes</h2>
-            <p className="muted">Fixed supply, launched fair on Pons: 100% of the supply goes into the bonding curve, with no team allocation.</p>
+            <p className="muted">Every trade pays a 1% fee on Pons. Slide to see where it goes.</p>
           </Reveal>
           <Reveal delay={80}>
-            <div className="flow">
-              <div className="flow-node flow-start"><span className="flow-k mono">Every trade</span><b>1% fee</b></div>
-              <span className="flow-arrow" aria-hidden="true" />
-              <div className="flow-split">
-                <div className="flow-node"><span className="flow-k mono">30%</span><b>Pons protocol</b></div>
-                <div className="flow-node flow-main"><span className="flow-k mono">70%</span><b>Creator fee</b></div>
-              </div>
-              <span className="flow-arrow" aria-hidden="true" />
-              <div className="flow-split">
-                <div className="flow-node"><span className="flow-k mono">70% of creator fee</span><b>Servers, AI, gas, listings</b></div>
-                <div className="flow-node flow-main"><span className="flow-k mono">30% of creator fee</span><b>Agent treasury → buys back $BREATH</b></div>
-              </div>
-              <span className="flow-arrow" aria-hidden="true" />
-              <div className="flow-node flow-end"><span className="flow-k mono">On death</span><b>70% holders · 20% saviors · 10% next gen</b></div>
-            </div>
+            <TokenFlow />
           </Reveal>
         </section>
 
