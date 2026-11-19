@@ -24,7 +24,7 @@ const ParticleOrb = forwardRef(function ParticleOrb({ status = 'HEALTHY' }, ref)
     const c = canvas.current;
     const g = c.getContext('2d');
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    let w = 0, h = 0, dpr = 1, raf = 0, visible = true, running = false, last = performance.now();
+    let w = 0, h = 0, dpr = 1, raf = 0, running = false, last = performance.now();
     const start = () => { if (running) return; running = true; last = performance.now(); raf = requestAnimationFrame(frame); };
     let pts = [];
     let rotY = 0, tiltX = -0.25, tiltY = 0, aimX = -0.25, aimY = 0;
@@ -69,18 +69,21 @@ const ParticleOrb = forwardRef(function ParticleOrb({ status = 'HEALTHY' }, ref)
     window.addEventListener('touchmove', move, { passive: true });
     c.parentElement.addEventListener('pointerleave', leave);
 
-    const io = typeof IntersectionObserver !== 'undefined'
-      ? new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) start(); })
-      : null;
-    io?.observe(c);
+    let lastScroll = window.scrollY, spinBoost = 0;
+    const lerp = (a, b, t) => a + (b - a) * t;
 
     function frame(now) {
-      if (!visible) { running = false; return; }
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
       const tempo = TEMPO[statusRef.current] ?? 4.5;
       if (tempo && !reduce) breathPhase += (dt / tempo) * Math.PI * 2;
-      if (!reduce) rotY += dt * (statusRef.current === 'DEAD' ? 0.02 : 0.18);
+      // scrolling spins the sphere a little and tips it in the scroll direction
+      const scrollY = window.scrollY;
+      const vel = scrollY - lastScroll;
+      lastScroll = scrollY;
+      if (!reduce) spinBoost += vel * 0.0025;
+      spinBoost *= 0.92;
+      if (!reduce) rotY += dt * (statusRef.current === 'DEAD' ? 0.02 : 0.18) + spinBoost * 0.08;
       tiltX += (aimX - tiltX) * 0.04;
       tiltY += (aimY - tiltY) * 0.04;
 
@@ -89,9 +92,18 @@ const ParticleOrb = forwardRef(function ParticleOrb({ status = 'HEALTHY' }, ref)
       if (waves.current.length) thump = Math.max(thump, 1);
       thump *= 0.9;
 
-      const R = Math.min(w, h) * (w < 640 ? 0.42 : 0.36);
+      // Follow the page: big and centred in the hero, then it shrinks and settles
+      // (to the right on desktop) and keeps breathing behind the content.
+      const mobile = w < 760;
+      const heroEl = document.querySelector('.hero');
+      const hr = heroEl ? heroEl.getBoundingClientRect() : { top: 0, height: h };
+      const prog = Math.max(0, Math.min(1, scrollY / (hr.height * 0.75)));
+      const e = prog * prog * (3 - 2 * prog);
+      const R = Math.min(w, h) * (mobile ? 0.42 : 0.36) * lerp(1, mobile ? 0.72 : 0.55, e);
       const breath = 1 + Math.sin(breathPhase) * 0.045 + thump * 0.035;
-      const cx = w / 2, cy = h / 2;
+      const cx = lerp(w / 2, mobile ? w / 2 : w * 0.8, e);
+      const cy = lerp(hr.top + hr.height * 0.46, h * 0.56, e);
+      const fade = lerp(1, 0.42, e);
       const cyR = Math.cos(rotY + tiltY), syR = Math.sin(rotY + tiltY);
       const cxR = Math.cos(tiltX), sxR = Math.sin(tiltX);
       const dying = statusRef.current === 'DYING' || statusRef.current === 'COMA';
@@ -100,8 +112,8 @@ const ParticleOrb = forwardRef(function ParticleOrb({ status = 'HEALTHY' }, ref)
 
       // inner glow
       const glow = g.createRadialGradient(cx, cy, 0, cx, cy, R * 1.25);
-      glow.addColorStop(0, `rgba(80,130,255,${0.32 + thump * 0.2})`);
-      glow.addColorStop(0.55, 'rgba(31,91,255,0.10)');
+      glow.addColorStop(0, `rgba(80,130,255,${(0.32 + thump * 0.2) * (1 - e * 0.75)})`);
+      glow.addColorStop(0.55, `rgba(31,91,255,${0.1 * (1 - e * 0.6)})`);
       glow.addColorStop(1, 'rgba(31,91,255,0)');
       g.fillStyle = glow;
       g.fillRect(0, 0, w, h);
@@ -144,9 +156,12 @@ const ParticleOrb = forwardRef(function ParticleOrb({ status = 'HEALTHY' }, ref)
 
         const depth = (z + 1) / 2; // 0 back .. 1 front
         const size = (0.7 + depth * 1.7) * (w < 640 ? 1.1 : 1);
-        const a = 0.18 + depth * 0.82;
-        const light = Math.round(170 + depth * 85);
-        g.fillStyle = push > 0.05 ? `rgba(255,255,255,${a})` : `rgba(${light - 60},${light - 20},255,${a})`;
+        const a = (0.18 + depth * 0.82) * fade;
+        const light = 170 + depth * 85;
+        // white-blue on the blue hero, logo blue over the white sections
+        const r = Math.round(lerp(light - 60, 31 + depth * 30, e));
+        const gg = Math.round(lerp(light - 20, 91 + depth * 30, e));
+        g.fillStyle = push > 0.05 && e < 0.5 ? `rgba(255,255,255,${a})` : `rgba(${r},${gg},255,${a})`;
         g.fillRect(sx - size / 2, sy - size / 2, size, size);
       }
 
@@ -156,7 +171,6 @@ const ParticleOrb = forwardRef(function ParticleOrb({ status = 'HEALTHY' }, ref)
 
     return () => {
       cancelAnimationFrame(raf);
-      io?.disconnect();
       window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', move);
       window.removeEventListener('touchmove', move);
