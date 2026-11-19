@@ -2,6 +2,7 @@ import Logo from '@/components/Logo';
 import Monitor from '@/components/Monitor';
 import { VitalsProvider } from '@/components/VitalsProvider';
 import { HeroStats, Ticker, Reveal } from '@/components/Live';
+import HeroMark from '@/components/HeroMark';
 import { Feed, Graveyard, SaviorCheck } from '@/components/Panels';
 import { site, STATUS, INHERITANCE } from '@/lib/site';
 
@@ -64,12 +65,7 @@ export default function Home() {
         {/* HERO: the mark breathes behind the wordmark */}
         <section className="hero">
           <div className="hero-glow" aria-hidden="true" />
-          <div className="hero-mark" aria-hidden="true">
-            <span className="ring ring-1" />
-            <span className="ring ring-2" />
-            <span className="ring ring-3" />
-            <Logo size={640} id="hero" className="hero-logo" title="" />
-          </div>
+          <HeroMark />
           <div className="hero-copy">
             <p className="eyebrow mono"><span className="live-dot" /> AI agent · Robinhood Chain</p>
             <h1 className="wordmark">
