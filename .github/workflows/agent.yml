@@ -3,7 +3,7 @@
 # The website reads that branch through /api/agent.
 #
 # Settings -> Secrets and variables -> Actions:
-#   Variables: BREATH_TOKEN, POOL_ADDRESSES, WILL_CONTRACT, AGENT_WALLET, START_BLOCK, DRY_RUN (true/false)
+#   Variables: BREATH_TOKEN, POOL_ADDRESSES, TREASURY_ADDRESS, WILL_CONTRACT, AGENT_WALLET, START_BLOCK, DRY_RUN (true/false)
 #   Secrets:   RPC_URL, ANTHROPIC_API_KEY, X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET,
 #              TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID (all optional except RPC_URL after launch)
 name: agent
@@ -50,6 +50,7 @@ jobs:
           BREATH_TOKEN: ${{ vars.BREATH_TOKEN }}
           POOL_ADDRESSES: ${{ vars.POOL_ADDRESSES }}
           WILL_CONTRACT: ${{ vars.WILL_CONTRACT }}
+          TREASURY_ADDRESS: ${{ vars.TREASURY_ADDRESS || '0xEA305C9F4EfCAAAC8Bbd46e39F40398d48eE7B36' }}
           AGENT_WALLET: ${{ vars.AGENT_WALLET }}
           START_BLOCK: ${{ vars.START_BLOCK || '0' }}
           DRY_RUN: ${{ vars.DRY_RUN || 'true' }}
