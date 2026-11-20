@@ -52,8 +52,8 @@ const BUY_STEPS = [
 ];
 
 const ROADMAP = [
-  { phase: 'Phase 1', name: 'Birth', state: 'now', items: ['Website and bedside monitor', 'X account and brand', 'Launch $BREATH on Pons', 'Agent goes live and starts posting'] },
-  { phase: 'Phase 2', name: 'Life', state: 'next', items: ['Treasury buybacks from the creator fee', 'Savior tracking on-chain', 'Inheritance contract tested and reviewed', 'Live data on this monitor'] },
+  { phase: 'Phase 1', name: 'Birth', state: 'done', items: ['Website and live bedside monitor', 'X account and brand', '$BREATH launched on Pons', 'Ash (Gen 1) is born, with real on-chain heartbeats', 'Burn #1 and a public treasury wallet'] },
+  { phase: 'Phase 2', name: 'Life', state: 'now', items: ['Inheritance contract tested and reviewed', 'Treasury buybacks from the creator fee', 'Savior tracking on-chain', 'Agent posts on its own'] },
   { phase: 'Phase 3', name: 'Afterlife', state: 'later', items: ['First death and inheritance payout', 'Rebirth: new generations, new personalities', 'Graveyard history and lore', 'Community-voted names for future generations'] },
 ];
 
@@ -215,7 +215,7 @@ export default function Home() {
                 <article className={`phase phase-${r.state}`}>
                   <div className="phase-head">
                     <span className="mono phase-k">{r.phase}</span>
-                    <span className={`phase-tag mono`}>{r.state === 'now' ? 'IN PROGRESS' : r.state === 'next' ? 'NEXT' : 'LATER'}</span>
+                    <span className={`phase-tag mono`}>{r.state === 'done' ? 'DONE ✓' : r.state === 'now' ? 'IN PROGRESS' : r.state === 'next' ? 'NEXT' : 'LATER'}</span>
                   </div>
                   <h3>{r.name}</h3>
                   <ul>{r.items.map((it) => <li key={it}>{it}</li>)}</ul>

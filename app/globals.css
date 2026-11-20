@@ -1106,3 +1106,5 @@ html.menu-open .mobile-bar { transform: translateY(160%); }
 html, body { overflow-x: clip; }
 .footer2-ca { flex-wrap: wrap; text-transform: none; letter-spacing: 0; }
 .footer2-col .footer2-ca .copy-ca-addr { text-transform: none; letter-spacing: 0; white-space: normal; word-break: break-all; overflow: visible; text-align: left; flex-basis: 100%; order: 3; }
+.phase-done .phase-tag { background: #e3f8ec; color: #11804a; }
+.phase-done li::marker { color: #11804a; }
