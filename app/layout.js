@@ -12,9 +12,9 @@ export const metadata = {
   openGraph: {
     title: `${site.name} (${site.ticker})`,
     description: site.description,
-    images: [{ url: '/og.png', width: 3000, height: 1000 }],
+    images: [{ url: '/og-live.png', width: 1200, height: 630 }],
   },
-  twitter: { card: 'summary_large_image', title: `${site.name} (${site.ticker})`, description: site.description, images: ['/og.png'] },
+  twitter: { card: 'summary_large_image', title: `${site.name} (${site.ticker})`, description: site.description, images: ['/og-live.png'] },
 };
 
 export const viewport = { themeColor: '#1f5bff' };

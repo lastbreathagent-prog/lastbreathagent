@@ -75,7 +75,7 @@ export default function Home() {
         <section className="hero" data-orb="sphere">
           <HeroScene>
             <div className="hero-copy">
-              <p className="eyebrow mono"><span className="live-dot" /> AI agent · Robinhood Chain</p>
+              <p className="eyebrow mono"><span className="live-dot" /> {site.buyUrl ? <>Live on Pons · Robinhood Chain</> : <>AI agent · Robinhood Chain</>}</p>
               <h1 className="wordmark">
                 <span className="w-last">LAST</span><span className="w-breath">BREATH</span>
               </h1>
