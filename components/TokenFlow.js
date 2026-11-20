@@ -7,11 +7,11 @@ const money = (n) => (n < 1 ? `$${n.toFixed(n < 0.1 ? 4 : 3)}` : `$${n.toLocaleS
 
 /**
  * "Where every trade goes" as an interactive receipt:
- * pick a trade size and watch the 1% fee split into Pons, operations and the agent's treasury.
+ * pick a trade size and watch the 2% fee split into Pons, operations and the agent's treasury.
  */
 export default function TokenFlow() {
   const [amt, setAmt] = useState(100);
-  const fee = amt * 0.01;
+  const fee = amt * 0.02;
   const pons = fee * 0.3;
   const ops = fee * 0.7 * 0.7;
   const treasury = fee * 0.7 * 0.3;
@@ -30,7 +30,7 @@ export default function TokenFlow() {
           <div className="receipt-amt">{money(amt)}<small> trade</small></div>
         </div>
         <div className="receipt-fee">
-          <span className="mono">1% fee</span>
+          <span className="mono">2% fee</span>
           <b>{money(fee)}</b>
         </div>
       </div>

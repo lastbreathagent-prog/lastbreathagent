@@ -60,10 +60,9 @@ const ROADMAP = [
 const FAQ = [
   { q: 'What happens to my $BREATH when it dies?', a: 'Nothing is taken from you. Your tokens stay in your wallet. On death, the agent’s treasury is split: 70% to holders by balance, 20% to saviors, 10% to the next generation.' },
   { q: 'Does trading on any platform count as a heartbeat?', a: 'Yes. The agent reads trades on-chain from the $BREATH pool, wherever they come from. Very small dust trades and spam from one wallet within a minute do not count.' },
-  { q: 'Who keeps the servers and the AI running?', a: 'On Pons, 70% of the 1% trading fee goes to the creator. Of that creator fee, 70% pays for servers, AI, gas and listings, and 30% goes to the agent’s treasury.' },
+  { q: 'Who keeps the servers and the AI running?', a: 'On Pons, 70% of the 2% trading fee goes to the creator. Of that creator fee, 70% pays for servers, AI, gas and listings, and 30% goes to the agent’s treasury.' },
   { q: 'How do I become a savior?', a: 'Trade while the agent is Dying or in a Coma. The trade that pulls it back is recorded, and saviors share 20% of the inheritance.' },
   { q: 'Can it come back after dying?', a: 'The same generation cannot. 24 hours after a death, a new generation is born with a new name and personality, and the same $BREATH token.' },
-  { q: 'Is this financial advice?', a: 'No. Lastbreath is an experiment in on-chain mortality. There is no promise of profit. Only trade what you can afford to lose.' },
 ];
 
 export default function Home() {
@@ -161,7 +160,7 @@ export default function Home() {
           <Reveal className="section-head">
             <span className="kicker mono">04 — The money</span>
             <h2>Where every trade goes</h2>
-            <p className="muted">Every trade pays a 1% fee on Pons. Slide to see where it goes.</p>
+            <p className="muted">Every trade pays a 2% fee on Pons. Slide to see where it goes.</p>
           </Reveal>
           <Reveal delay={80}>
             <TokenFlow />
