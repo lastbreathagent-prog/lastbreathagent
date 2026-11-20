@@ -1096,3 +1096,13 @@ html.menu-open .mobile-bar { transform: translateY(160%); }
 .copy-ca-label { opacity: 0.7; }
 .copy-ca-addr { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .copy-ca-btn { flex: none; padding: 3px 8px; border-radius: 8px; background: #fff; color: var(--blue); font-weight: 700; font-size: 11px; }
+
+/* ===================== mobile fix: long CA must never widen the page ===================== */
+.scene > *, .hero-copy, .footer2-col, .footer2-brand { min-width: 0; max-width: 100%; }
+.copy-ca { max-width: 100%; min-width: 0; }
+.copy-ca-label { flex: none; white-space: nowrap; }
+.copy-ca-addr { flex: 1 1 auto; min-width: 0; }
+.footer2-ca { width: 100%; }
+html, body { overflow-x: clip; }
+.footer2-ca { flex-wrap: wrap; text-transform: none; letter-spacing: 0; }
+.footer2-col .footer2-ca .copy-ca-addr { text-transform: none; letter-spacing: 0; white-space: normal; word-break: break-all; overflow: visible; text-align: left; flex-basis: 100%; order: 3; }
