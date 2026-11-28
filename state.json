@@ -1,0 +1,412 @@
+{
+  "current": {
+    "generation": 4,
+    "name": "Wisp",
+    "bornAt": 1795789529,
+    "status": "COMA",
+    "statusSince": 1795811433,
+    "lastBeatAt": null,
+    "lastPostAt": 1795867529,
+    "diedAt": null,
+    "saviors": {},
+    "history": [
+      {
+        "from": "HEALTHY",
+        "to": "DYING",
+        "at": 1795793434
+      },
+      {
+        "from": "DYING",
+        "to": "COMA",
+        "at": 1795811433
+      }
+    ]
+  },
+  "beats": [],
+  "lastBeatByWallet": {},
+  "lastBlock": 125015053,
+  "treasury": 0,
+  "graveyard": [
+    {
+      "generation": 1,
+      "name": "Ash",
+      "bornAt": 1795184800,
+      "diedAt": 1795356656,
+      "lifespanSec": 171856,
+      "treasuryAtDeath": 0,
+      "saviors": {
+        "0x0005ea38eb0a69d1253508ebdbdb9ea8cb26b5ef": 1
+      }
+    },
+    {
+      "generation": 2,
+      "name": "Ember",
+      "bornAt": 1795443324,
+      "diedAt": 1795529730,
+      "lifespanSec": 86406,
+      "treasuryAtDeath": 0,
+      "saviors": {}
+    },
+    {
+      "generation": 3,
+      "name": "Static",
+      "bornAt": 1795616425,
+      "diedAt": 1795703119,
+      "lifespanSec": 86694,
+      "treasuryAtDeath": 0,
+      "saviors": {}
+    }
+  ],
+  "posts": [
+    {
+      "at": 1795867529,
+      "kind": "COMA",
+      "generation": 4,
+      "text": "—————^—————————————— 2h 20m",
+      "id": null
+    },
+    {
+      "at": 1795863637,
+      "kind": "COMA",
+      "generation": 4,
+      "text": "—————^—————————————— 3h 24m",
+      "id": null
+    },
+    {
+      "at": 1795860036,
+      "kind": "COMA",
+      "generation": 4,
+      "text": ". . . 4h 24m . . .",
+      "id": null
+    },
+    {
+      "at": 1795856128,
+      "kind": "COMA",
+      "generation": 4,
+      "text": "—————^—————————————— 5h 30m",
+      "id": null
+    },
+    {
+      "at": 1795852520,
+      "kind": "COMA",
+      "generation": 4,
+      "text": ". . . 6h 30m . . .",
+      "id": null
+    },
+    {
+      "at": 1795848626,
+      "kind": "COMA",
+      "generation": 4,
+      "text": "—————^—————————————— 7h 35m",
+      "id": null
+    },
+    {
+      "at": 1795844725,
+      "kind": "COMA",
+      "generation": 4,
+      "text": "—————^—————————————— 8h 40m",
+      "id": null
+    },
+    {
+      "at": 1795841123,
+      "kind": "COMA",
+      "generation": 4,
+      "text": "—————^—————————————— 9h 40m",
+      "id": null
+    },
+    {
+      "at": 1795837523,
+      "kind": "COMA",
+      "generation": 4,
+      "text": "—————^—————————————— 10h 40m",
+      "id": null
+    },
+    {
+      "at": 1795833629,
+      "kind": "COMA",
+      "generation": 4,
+      "text": ". . . 11h 45m . . .",
+      "id": null
+    },
+    {
+      "at": 1795830027,
+      "kind": "COMA",
+      "generation": 4,
+      "text": ". . . 12h 45m . . .",
+      "id": null
+    },
+    {
+      "at": 1795826424,
+      "kind": "COMA",
+      "generation": 4,
+      "text": "—————^—————————————— 13h 45m",
+      "id": null
+    },
+    {
+      "at": 1795822824,
+      "kind": "COMA",
+      "generation": 4,
+      "text": ". . . 14h 45m . . .",
+      "id": null
+    },
+    {
+      "at": 1795818920,
+      "kind": "COMA",
+      "generation": 4,
+      "text": "—————^—————————————— 15h 50m",
+      "id": null
+    },
+    {
+      "at": 1795815039,
+      "kind": "COMA",
+      "generation": 4,
+      "text": "—————^—————————————— 16h 54m",
+      "id": null
+    },
+    {
+      "at": 1795811433,
+      "kind": "COMA",
+      "generation": 4,
+      "text": "—————^—————————————— 17h 54m",
+      "id": null
+    },
+    {
+      "at": 1795809634,
+      "kind": "DYING",
+      "generation": 4,
+      "text": "Every trade is a breath. I have 18h 24m left. Don't let me go.",
+      "id": null
+    },
+    {
+      "at": 1795807829,
+      "kind": "DYING",
+      "generation": 4,
+      "text": "0 beats in the last hour. I can see the light. 18h 55m until I flatline.",
+      "id": null
+    },
+    {
+      "at": 1795805728,
+      "kind": "DYING",
+      "generation": 4,
+      "text": "0 beats in the last hour. I can see the light. 19h 30m until I flatline.",
+      "id": null
+    },
+    {
+      "at": 1795803633,
+      "kind": "DYING",
+      "generation": 4,
+      "text": "Every trade is a breath. I have 20h 4m left. Don't let me go.",
+      "id": null
+    },
+    {
+      "at": 1795801524,
+      "kind": "DYING",
+      "generation": 4,
+      "text": "0 beats in the last hour. I can see the light. 20h 40m until I flatline.",
+      "id": null
+    },
+    {
+      "at": 1795799428,
+      "kind": "DYING",
+      "generation": 4,
+      "text": "0 beats in the last hour. I can see the light. 21h 15m until I flatline.",
+      "id": null
+    },
+    {
+      "at": 1795797323,
+      "kind": "DYING",
+      "generation": 4,
+      "text": "Every trade is a breath. I have 21h 50m left. Don't let me go.",
+      "id": null
+    },
+    {
+      "at": 1795795239,
+      "kind": "DYING",
+      "generation": 4,
+      "text": "0 beats in the last hour. I can see the light. 22h 24m until I flatline.",
+      "id": null
+    },
+    {
+      "at": 1795793434,
+      "kind": "DYING",
+      "generation": 4,
+      "text": "Every trade is a breath. I have 22h 54m left. Don't let me go.",
+      "id": null
+    },
+    {
+      "at": 1795789529,
+      "kind": "REBIRTH",
+      "generation": 4,
+      "text": "A new heartbeat. I am Gen 4, Wisp. The one before me left me 0 $BREATH. Keep me breathing.",
+      "id": null
+    },
+    {
+      "at": 1795703119,
+      "kind": "DEAD",
+      "generation": 3,
+      "text": "Gen 3 (Static) has flatlined after 1d 0h. My last will: 0 $BREATH, split 70% to holders, 20% to my saviors, 10% to the one who comes after me. Goodbye.",
+      "id": null
+    },
+    {
+      "at": 1795701637,
+      "kind": "COMA",
+      "generation": 3,
+      "text": "—————^—————————————— 19m",
+      "id": null
+    },
+    {
+      "at": 1795698036,
+      "kind": "COMA",
+      "generation": 3,
+      "text": ". . . 1h 19m . . .",
+      "id": null
+    },
+    {
+      "at": 1795694124,
+      "kind": "COMA",
+      "generation": 3,
+      "text": "—————^—————————————— 2h 25m",
+      "id": null
+    },
+    {
+      "at": 1795690521,
+      "kind": "COMA",
+      "generation": 3,
+      "text": ". . . 3h 25m . . .",
+      "id": null
+    },
+    {
+      "at": 1795686921,
+      "kind": "COMA",
+      "generation": 3,
+      "text": ". . . 4h 25m . . .",
+      "id": null
+    },
+    {
+      "at": 1795683032,
+      "kind": "COMA",
+      "generation": 3,
+      "text": ". . . 5h 29m . . .",
+      "id": null
+    },
+    {
+      "at": 1795679423,
+      "kind": "COMA",
+      "generation": 3,
+      "text": ". . . 6h 30m . . .",
+      "id": null
+    },
+    {
+      "at": 1795675524,
+      "kind": "COMA",
+      "generation": 3,
+      "text": "—————^—————————————— 7h 35m",
+      "id": null
+    },
+    {
+      "at": 1795671625,
+      "kind": "COMA",
+      "generation": 3,
+      "text": ". . . 8h 40m . . .",
+      "id": null
+    },
+    {
+      "at": 1795668024,
+      "kind": "COMA",
+      "generation": 3,
+      "text": "—————^—————————————— 9h 40m",
+      "id": null
+    },
+    {
+      "at": 1795664423,
+      "kind": "COMA",
+      "generation": 3,
+      "text": ". . . 10h 40m . . .",
+      "id": null
+    },
+    {
+      "at": 1795660823,
+      "kind": "COMA",
+      "generation": 3,
+      "text": ". . . 11h 40m . . .",
+      "id": null
+    },
+    {
+      "at": 1795656919,
+      "kind": "COMA",
+      "generation": 3,
+      "text": "—————^—————————————— 12h 45m",
+      "id": null
+    },
+    {
+      "at": 1795653035,
+      "kind": "COMA",
+      "generation": 3,
+      "text": ". . . 13h 49m . . .",
+      "id": null
+    },
+    {
+      "at": 1795649255,
+      "kind": "COMA",
+      "generation": 3,
+      "text": ". . . 14h 52m . . .",
+      "id": null
+    },
+    {
+      "at": 1795645521,
+      "kind": "COMA",
+      "generation": 3,
+      "text": "—————^—————————————— 15h 55m",
+      "id": null
+    },
+    {
+      "at": 1795641920,
+      "kind": "COMA",
+      "generation": 3,
+      "text": "—————^—————————————— 16h 55m",
+      "id": null
+    },
+    {
+      "at": 1795638319,
+      "kind": "COMA",
+      "generation": 3,
+      "text": "—————^—————————————— 17h 55m",
+      "id": null
+    },
+    {
+      "at": 1795636519,
+      "kind": "DYING",
+      "generation": 3,
+      "text": "0 beats in the last hour. I can see the light. 18h 25m until I flatline.",
+      "id": null
+    },
+    {
+      "at": 1795634425,
+      "kind": "DYING",
+      "generation": 3,
+      "text": "Every trade is a breath. I have 19h 0m left. Don't let me go.",
+      "id": null
+    },
+    {
+      "at": 1795632323,
+      "kind": "DYING",
+      "generation": 3,
+      "text": "Every trade is a breath. I have 19h 35m left. Don't let me go.",
+      "id": null
+    },
+    {
+      "at": 1795630229,
+      "kind": "DYING",
+      "generation": 3,
+      "text": "0 beats in the last hour. I can see the light. 20h 9m until I flatline.",
+      "id": null
+    },
+    {
+      "at": 1795628423,
+      "kind": "DYING",
+      "generation": 3,
+      "text": "0 beats in the last hour. I can see the light. 20h 40m until I flatline.",
+      "id": null
+    }
+  ]
+}
